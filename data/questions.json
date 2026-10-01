@@ -1,0 +1,25 @@
+{
+  "_comment": "연습 질문 세트. 담당: 콘텐츠팀. id는 회차 비교 기준이므로 한 번 정하면 바꾸지 마세요. timeLimit 단위는 초.",
+  "categories": [
+    {
+      "id": "interview",
+      "label": "면접 기본 질문",
+      "questions": [
+        { "id": "intro-1min", "text": "1분 동안 자기소개를 해주세요.", "timeLimit": 60, "tip": "이름·지원 동기·강점 1개를 순서대로 말해보세요." },
+        { "id": "motivation", "text": "우리 회사에 지원한 이유는 무엇인가요?", "timeLimit": 90, "tip": "회사의 특징 1개와 나의 경험 1개를 연결해보세요." },
+        { "id": "strength-weakness", "text": "본인의 장점과 단점을 말해주세요.", "timeLimit": 90, "tip": "단점은 개선하고 있는 방법까지 함께 말해보세요." },
+        { "id": "teamwork", "text": "팀으로 일하면서 갈등을 해결한 경험이 있나요?", "timeLimit": 90, "tip": "상황 → 행동 → 결과(STAR) 순서로 말해보세요." },
+        { "id": "last-words", "text": "마지막으로 하고 싶은 말이 있나요?", "timeLimit": 60, "tip": "짧고 분명하게, 입사 후 포부로 마무리해보세요." }
+      ]
+    },
+    {
+      "id": "pt",
+      "label": "PT 면접",
+      "questions": [
+        { "id": "pt-summary", "text": "준비한 PT의 핵심 내용을 1분 30초로 요약해 발표해주세요.", "timeLimit": 90, "tip": "결론을 먼저 말하고 근거 2~3개를 이어보세요." },
+        { "id": "pt-ai-industry", "text": "AI가 우리 산업에 미칠 영향을 발표해주세요.", "timeLimit": 90, "tip": "기회 1개, 위험 1개, 대응 방안 1개로 구성해보세요." }
+      ]
+    }
+  ],
+  "free": { "id": "free", "label": "자유 발표", "timeLimit": 180, "tip": "발표 제목을 입력하면 같은 제목끼리 회차를 비교해요." }
+}

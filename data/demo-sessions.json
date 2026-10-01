@@ -1,0 +1,445 @@
+{
+  "_comment": "샘플(데모) 기록 — 가상의 인물 김발표의 5회차 연습. 실제 개인정보 아님. 담당: 콘텐츠팀.",
+  "sessions": [
+    {
+      "id": "demo-1",
+      "demo": true,
+      "createdAt": "2026-09-24T11:00:00.000Z",
+      "questionId": "intro-1min",
+      "questionText": "1분 동안 자기소개를 해주세요.",
+      "category": "면접 기본 질문",
+      "durationSec": 58,
+      "metrics": {
+        "speed": 392,
+        "silence": 2.8,
+        "filler": 7.2,
+        "gaze": 38,
+        "expression": 4,
+        "shoulderTilt": 9.5,
+        "sway": 0.12,
+        "gesture": 6,
+        "gestureActivity": 0.2,
+        "fillerCounts": {
+          "음": 4,
+          "어": 4,
+          "그": 3
+        },
+        "gazeSide": "down",
+        "gazeSideText": "아래쪽(메모·화면)",
+        "syllables": 98,
+        "speechError": null
+      },
+      "markers": [
+        {
+          "t": 2,
+          "type": "filler",
+          "label": "추임새 +(k%2?어:음)+"
+        },
+        {
+          "t": 6,
+          "end": 8,
+          "type": "gaze",
+          "label": "2.0초 시선 이탈"
+        },
+        {
+          "t": 12.9,
+          "end": 15.5,
+          "type": "gaze",
+          "label": "2.6초 시선 이탈"
+        },
+        {
+          "t": 15,
+          "type": "filler",
+          "label": "추임새 +(k%2?어:음)+"
+        },
+        {
+          "t": 18,
+          "end": 21.4,
+          "type": "silence",
+          "label": "3.4초 침묵"
+        },
+        {
+          "t": 19.7,
+          "end": 22.9,
+          "type": "gaze",
+          "label": "3.2초 시선 이탈"
+        },
+        {
+          "t": 26.6,
+          "end": 28.6,
+          "type": "gaze",
+          "label": "2.0초 시선 이탈"
+        },
+        {
+          "t": 28,
+          "type": "filler",
+          "label": "추임새 +(k%2?어:음)+"
+        },
+        {
+          "t": 32,
+          "end": 35.4,
+          "type": "silence",
+          "label": "3.4초 침묵"
+        },
+        {
+          "t": 33.4,
+          "end": 36,
+          "type": "gaze",
+          "label": "2.6초 시선 이탈"
+        },
+        {
+          "t": 40,
+          "end": 47,
+          "type": "posture",
+          "label": "어깨 기울어짐"
+        },
+        {
+          "t": 40.3,
+          "end": 43.5,
+          "type": "gaze",
+          "label": "3.2초 시선 이탈"
+        },
+        {
+          "t": 41,
+          "type": "filler",
+          "label": "추임새 +(k%2?어:음)+"
+        },
+        {
+          "t": 46,
+          "end": 49.4,
+          "type": "silence",
+          "label": "3.4초 침묵"
+        },
+        {
+          "t": 47.1,
+          "end": 49.1,
+          "type": "gaze",
+          "label": "2.0초 시선 이탈"
+        }
+      ],
+      "transcript": "음 안녕하세요 저는 어 경영학을 전공한 김발표입니다 음 제가 이 회사에 지원한 이유는 어 그 데이터로 문제를 푸는 일을 하고 싶어서입니다 음 대학교 때 어 동아리에서 그 회계 자료를 정리했고 음 그 경험으로 꼼꼼함을 배웠습니다 어 감사합니다"
+    },
+    {
+      "id": "demo-2",
+      "demo": true,
+      "createdAt": "2026-09-25T11:00:00.000Z",
+      "questionId": "intro-1min",
+      "questionText": "1분 동안 자기소개를 해주세요.",
+      "category": "면접 기본 질문",
+      "durationSec": 59,
+      "metrics": {
+        "speed": 378,
+        "silence": 2.2,
+        "filler": 5.6,
+        "gaze": 44,
+        "expression": 6,
+        "shoulderTilt": 8,
+        "sway": 0.1,
+        "gesture": 11,
+        "gestureActivity": 0.28,
+        "fillerCounts": {
+          "음": 2,
+          "어": 1,
+          "그": 1
+        },
+        "gazeSide": "down",
+        "gazeSideText": "아래쪽(메모·화면)",
+        "syllables": 84,
+        "speechError": null
+      },
+      "markers": [
+        {
+          "t": 2,
+          "type": "filler",
+          "label": "추임새 +(k%2?어:음)+"
+        },
+        {
+          "t": 6,
+          "end": 8,
+          "type": "gaze",
+          "label": "2.0초 시선 이탈"
+        },
+        {
+          "t": 14.2,
+          "end": 16.8,
+          "type": "gaze",
+          "label": "2.6초 시선 이탈"
+        },
+        {
+          "t": 18,
+          "end": 21.4,
+          "type": "silence",
+          "label": "3.4초 침묵"
+        },
+        {
+          "t": 19,
+          "type": "filler",
+          "label": "추임새 +(k%2?어:음)+"
+        },
+        {
+          "t": 22.3,
+          "end": 25.5,
+          "type": "gaze",
+          "label": "3.2초 시선 이탈"
+        },
+        {
+          "t": 30.5,
+          "end": 32.5,
+          "type": "gaze",
+          "label": "2.0초 시선 이탈"
+        },
+        {
+          "t": 32,
+          "end": 35.4,
+          "type": "silence",
+          "label": "3.4초 침묵"
+        },
+        {
+          "t": 37,
+          "type": "filler",
+          "label": "추임새 +(k%2?어:음)+"
+        },
+        {
+          "t": 38.7,
+          "end": 41.3,
+          "type": "gaze",
+          "label": "2.6초 시선 이탈"
+        },
+        {
+          "t": 40,
+          "end": 47,
+          "type": "posture",
+          "label": "어깨 기울어짐"
+        },
+        {
+          "t": 46.8,
+          "end": 50,
+          "type": "gaze",
+          "label": "3.2초 시선 이탈"
+        }
+      ],
+      "transcript": "안녕하세요 저는 경영학을 전공한 김발표입니다 음 이 회사에 지원한 이유는 데이터로 문제를 푸는 일을 하고 싶어서입니다 어 대학교 동아리에서 회계 자료를 정리하며 음 꼼꼼함을 배웠습니다 그 감사합니다"
+    },
+    {
+      "id": "demo-3",
+      "demo": true,
+      "createdAt": "2026-09-26T11:00:00.000Z",
+      "questionId": "intro-1min",
+      "questionText": "1분 동안 자기소개를 해주세요.",
+      "category": "면접 기본 질문",
+      "durationSec": 60,
+      "metrics": {
+        "speed": 366,
+        "silence": 1.6,
+        "filler": 4.2,
+        "gaze": 49,
+        "expression": 7,
+        "shoulderTilt": 6.5,
+        "sway": 0.08,
+        "gesture": 17,
+        "gestureActivity": 0.36,
+        "fillerCounts": {
+          "음": 1,
+          "어": 1
+        },
+        "gazeSide": "down",
+        "gazeSideText": "아래쪽(메모·화면)",
+        "syllables": 86,
+        "speechError": null
+      },
+      "markers": [
+        {
+          "t": 2,
+          "type": "filler",
+          "label": "추임새 +(k%2?어:음)+"
+        },
+        {
+          "t": 6,
+          "end": 8,
+          "type": "gaze",
+          "label": "2.0초 시선 이탈"
+        },
+        {
+          "t": 16,
+          "end": 18.6,
+          "type": "gaze",
+          "label": "2.6초 시선 이탈"
+        },
+        {
+          "t": 18,
+          "end": 21.4,
+          "type": "silence",
+          "label": "3.4초 침묵"
+        },
+        {
+          "t": 20,
+          "type": "filler",
+          "label": "추임새 +(k%2?어:음)+"
+        },
+        {
+          "t": 26,
+          "end": 29.2,
+          "type": "gaze",
+          "label": "3.2초 시선 이탈"
+        },
+        {
+          "t": 32,
+          "end": 35.4,
+          "type": "silence",
+          "label": "3.4초 침묵"
+        },
+        {
+          "t": 36,
+          "end": 38,
+          "type": "gaze",
+          "label": "2.0초 시선 이탈"
+        },
+        {
+          "t": 38,
+          "type": "filler",
+          "label": "추임새 +(k%2?어:음)+"
+        },
+        {
+          "t": 40,
+          "end": 47,
+          "type": "posture",
+          "label": "어깨 기울어짐"
+        },
+        {
+          "t": 46,
+          "end": 48.6,
+          "type": "gaze",
+          "label": "2.6초 시선 이탈"
+        }
+      ],
+      "transcript": "안녕하세요 경영학을 전공한 김발표입니다 저는 데이터로 문제를 푸는 일을 하고 싶어 지원했습니다 음 대학교 동아리에서 회계 자료를 정리하며 꼼꼼함을 배웠고 어 이를 실무에서 발휘하고 싶습니다 감사합니다"
+    },
+    {
+      "id": "demo-4",
+      "demo": true,
+      "createdAt": "2026-09-28T11:00:00.000Z",
+      "questionId": "intro-1min",
+      "questionText": "1분 동안 자기소개를 해주세요.",
+      "category": "면접 기본 질문",
+      "durationSec": 61,
+      "metrics": {
+        "speed": 360,
+        "silence": 1,
+        "filler": 3,
+        "gaze": 54,
+        "expression": 9,
+        "shoulderTilt": 5,
+        "sway": 0.06,
+        "gesture": 24,
+        "gestureActivity": 0.44,
+        "fillerCounts": {
+          "음": 1
+        },
+        "gazeSide": "right",
+        "gazeSideText": "오른쪽",
+        "syllables": 93,
+        "speechError": null
+      },
+      "markers": [
+        {
+          "t": 2,
+          "type": "filler",
+          "label": "추임새 +(k%2?어:음)+"
+        },
+        {
+          "t": 6,
+          "end": 8,
+          "type": "gaze",
+          "label": "2.0초 시선 이탈"
+        },
+        {
+          "t": 18,
+          "end": 21.4,
+          "type": "silence",
+          "label": "3.4초 침묵"
+        },
+        {
+          "t": 18.8,
+          "end": 21.4,
+          "type": "gaze",
+          "label": "2.6초 시선 이탈"
+        },
+        {
+          "t": 29,
+          "type": "filler",
+          "label": "추임새 +(k%2?어:음)+"
+        },
+        {
+          "t": 31.5,
+          "end": 34.7,
+          "type": "gaze",
+          "label": "3.2초 시선 이탈"
+        },
+        {
+          "t": 44.3,
+          "end": 46.3,
+          "type": "gaze",
+          "label": "2.0초 시선 이탈"
+        }
+      ],
+      "transcript": "안녕하세요 데이터로 문제를 푸는 사람 김발표입니다 저는 대학교 동아리에서 삼 년간 회계 자료를 정리하며 꼼꼼함을 길렀습니다 음 이 경험을 바탕으로 고객의 숫자 뒤에 숨은 문제를 찾는 일을 하고 싶어 지원했습니다 감사합니다"
+    },
+    {
+      "id": "demo-5",
+      "demo": true,
+      "createdAt": "2026-09-29T11:00:00.000Z",
+      "questionId": "intro-1min",
+      "questionText": "1분 동안 자기소개를 해주세요.",
+      "category": "면접 기본 질문",
+      "durationSec": 62,
+      "metrics": {
+        "speed": 352,
+        "silence": 0.5,
+        "filler": 2.4,
+        "gaze": 58,
+        "expression": 10,
+        "shoulderTilt": 3.5,
+        "sway": 0.05,
+        "gesture": 31,
+        "gestureActivity": 0.52,
+        "fillerCounts": {},
+        "gazeSide": "right",
+        "gazeSideText": "오른쪽",
+        "syllables": 99,
+        "speechError": null
+      },
+      "markers": [
+        {
+          "t": 2,
+          "type": "filler",
+          "label": "추임새 +(k%2?어:음)+"
+        },
+        {
+          "t": 6,
+          "end": 8,
+          "type": "gaze",
+          "label": "2.0초 시선 이탈"
+        },
+        {
+          "t": 18,
+          "end": 21.4,
+          "type": "silence",
+          "label": "3.4초 침묵"
+        },
+        {
+          "t": 23.3,
+          "end": 25.9,
+          "type": "gaze",
+          "label": "2.6초 시선 이탈"
+        },
+        {
+          "t": 40.7,
+          "end": 43.9,
+          "type": "gaze",
+          "label": "3.2초 시선 이탈"
+        }
+      ],
+      "transcript": "안녕하세요 데이터로 문제를 푸는 사람 김발표입니다 저는 대학교 동아리에서 삼 년간 회계 자료를 정리하며 작은 오류도 놓치지 않는 꼼꼼함을 길렀습니다 이 강점으로 고객의 숫자 뒤에 숨은 문제를 찾고 신뢰받는 동료가 되겠습니다 감사합니다"
+    }
+  ]
+}
