@@ -19,15 +19,18 @@ AREA = {
     "AP본사 B1": "ls",
     "AP본사 1층": "ls",
     "인근 아스테리움 B1": "ls",
+    "인근 아스테리움": "ls",
     "인근 용리단길": "yr",
     "인근": "yr",
     "한강로동": "yr",
     "용산 아이파크몰": "ipark",
     "편의점": "cvs",
 }
-SOURCE = {"공식값": "official", "추정치": "est"}
+SOURCE = {"공식값": "official", "공식": "official", "추정치": "est"}
+# 편의점은 엑셀 '구역'에 건물명이 적혀 있으므로 식당명으로 판별해 area=cvs로 둔다
+CVS_BRANDS = ("CU ", "GS25", "세븐일레븐", "이마트24", "미니스톱")
 HEADER = ["구역", "식당명", "메뉴명", "가격(원)", "칼로리(kcal)", "칼로리 출처",
-          "점심 영업", "저녁 영업", "심야 영업", "탄수화물(g)", "단백질(g)", "지방(g)"]
+          "점심 영업", "저녁 영업", "심야 영업", "탄수화물(g)", "단백질(g)", "지방(g)", "비고"]
 
 
 def ox(v, where):
@@ -52,10 +55,10 @@ def main(path):
     for n, r in enumerate(rows[head + 1:], start=head + 2):
         if not r or not r[1]:
             continue
-        area_txt, rest, menu, price, kcal, src, lu, di, la, c, p, f = r[:12]
+        area_txt, rest, menu, price, kcal, src, lu, di, la, c, p, f, note = r[:13]
         where = f"{n}행 {rest} / {menu}"
         try:
-            area = AREA[str(area_txt).strip()]
+            area = "cvs" if str(rest).startswith(CVS_BRANDS) else AREA[str(area_txt).strip()]
             rid = rest_ids.setdefault(rest, len(rest_ids) + 1)
             seq = sum(1 for m in out if m["restaurant"] == rest) + 1
             out.append({
@@ -68,6 +71,7 @@ def main(path):
                 "source": SOURCE[str(src).strip()],
                 "open": {"lunch": ox(lu, where), "dinner": ox(di, where), "late": ox(la, where)},
                 "carb": num(c), "protein": num(p), "fat": num(f),
+                "note": str(note).strip() if note not in (None, "") else None,
             })
             if out[-1]["price"] is None or out[-1]["kcal"] is None:
                 raise ValueError("가격/칼로리 빈칸")

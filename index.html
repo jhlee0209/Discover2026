@@ -92,6 +92,8 @@
     .btn { border: 1px solid var(--main); background: var(--main); color: var(--on-main); padding: 11px 14px; border-radius: 10px; font-weight: 800; cursor: pointer; }
     .btn:active { transform: scale(.98); }
     .btn-ghost { background: var(--card); color: var(--text); border-color: var(--border); }
+    .jump { display: none; text-align: center; text-decoration: none; margin-top: 8px; }
+    #s2 { scroll-margin-top: 12px; }
     .legend-box { border-top: 1px solid var(--border); padding-top: 14px; display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; color: var(--sub); }
     .legend-box .row { display: flex; gap: 8px; align-items: flex-start; }
     .legend-box .row .badge { flex: none; }
@@ -181,6 +183,7 @@
     .fact { background: var(--bg); border-radius: 10px; padding: 10px 12px; }
     .fact .k { font-size: 12px; color: var(--sub); font-weight: 700; }
     .fact .v { font-size: 18px; font-weight: 800; }
+    .note { margin: -2px 0 10px; padding: 9px 12px; border-radius: 10px; background: var(--bg); font-size: 13.5px; }
     .macros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .macro { border-radius: 10px; padding: 8px 10px; border: 1px solid var(--border); font-size: 13px; }
     .macro b { display: block; font-size: 16px; }
@@ -204,6 +207,7 @@
       .s1-fields .wide { grid-column: span 2; }
     }
     @media (max-width: 720px) {
+      .jump { display: block; }
       .s1-fields { display: flex; flex-direction: column; }
       .week { grid-template-columns: minmax(0, 1fr); gap: 18px; }
       .stats { grid-template-columns: minmax(0, 1fr); }
@@ -253,6 +257,7 @@
         </div>
         <div class="field" style="justify-content:flex-end">
           <button class="btn" id="reshuffle" type="button">↻ 식단 다시 짜기</button>
+          <a class="btn btn-ghost jump" href="#s2">이번 주 식단 보기 ↓</a>
         </div>
         <div class="legend-box wide" aria-label="칼로리 출처 안내">
           <b style="color:var(--text)">칼로리 출처 안내</b>
@@ -264,7 +269,7 @@
 
     <div class="right">
       <!-- S2 이번 주 식단표 -->
-      <section class="panel" aria-labelledby="s2-title">
+      <section class="panel" id="s2" aria-labelledby="s2-title">
         <h2 class="panel-title" id="s2-title">이번 주 식단표 <small>카드를 누르면 상세 · 메뉴 바꾸기</small></h2>
         <div class="week" id="week"></div>
       </section>
@@ -406,6 +411,13 @@
       m.open[slot.open] && m.price <= slot.budget && (!slot.areas || slot.areas.includes(m.area)));
   }
 
+  // 추천 메뉴가 없을 때 이유: 버짓을 올리면 해결되는 경우에만 버짓 안내
+  function emptyReason(slot) {
+    const reachable = state.data.some((m) => m.open[slot.open] && (!slot.areas || slot.areas.includes(m.area)));
+    if (reachable) return '예산 내 메뉴 없음 · 버짓을 올려 보세요';
+    return slot.meal === 'snack' ? '심야에 영업하는 메뉴 없음' : '이 시간대에 갈 수 있는 메뉴 없음';
+  }
+
   function computePlan() {
     const rng = mulberry32(state.seed);
     const used = new Set();
@@ -456,7 +468,7 @@
     }
     const tags = `${s.tag ? `<span class="tag tag-ot">${s.tag}</span>` : ''}${s.cheat ? '<span class="tag tag-cheat">치팅</span>' : ''}`;
     if (!s.menu) {
-      return `<div class="meal empty"><div class="meal-top"><span class="meal-label">${label}</span><span class="meal-tags">${tags}</span></div><span class="empty-text">예산 내 메뉴 없음 · 버짓을 올려 보세요</span></div>`;
+      return `<div class="meal empty"><div class="meal-top"><span class="meal-label">${label}</span><span class="meal-tags">${tags}</span></div><span class="empty-text">${emptyReason(s)}</span></div>`;
     }
     const m = s.menu;
     let bar = '';
@@ -565,9 +577,9 @@
       .slice(0, 4);
     const macro = hasMacro(m)
       ? `<div class="macros num">
-          <div class="macro"><span class="sub">탄수화물</span><b style="color:var(--carb)">${m.carb} g</b></div>
-          <div class="macro"><span class="sub">단백질</span><b style="color:var(--protein)">${m.protein} g</b></div>
-          <div class="macro"><span class="sub">지방</span><b style="color:var(--fat)">${m.fat} g</b></div>
+          <div class="macro"><span class="sub"><i class="sw c-carb"></i> 탄수화물</span><b>${m.carb} g</b></div>
+          <div class="macro"><span class="sub"><i class="sw c-protein"></i> 단백질</span><b>${m.protein} g</b></div>
+          <div class="macro"><span class="sub"><i class="sw c-fat"></i> 지방</span><b>${m.fat} g</b></div>
         </div>`
       : '<p class="sub" style="font-size:13px">탄수화물 · 단백질 · 지방 정보가 아직 없어요.</p>';
     $('#sheet').innerHTML = `
@@ -584,6 +596,7 @@
         <div class="fact"><span class="k">칼로리</span><div class="v">${fmt(m.kcal)} kcal</div></div>
         <div class="fact"><span class="k">가격</span><div class="v">${fmt(m.price)}원</div></div>
       </div>
+      ${m.note ? `<p class="note">📝 ${esc(m.note)}</p>` : ''}
       ${macro}
       <div class="source-line">${sourceBadge(m)}<span>${m.source === 'official' ? '포장지 · 브랜드가 공개한 영양 정보예요.' : '공식 정보가 없어 팀이 추정한 칼로리예요.'}</span></div>
       <h3 class="alts-title">다른 메뉴로 바꾸기</h3>
