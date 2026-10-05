@@ -97,6 +97,11 @@
     .legend-box { border-top: 1px solid var(--border); padding-top: 14px; display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; color: var(--sub); }
     .legend-box .row { display: flex; gap: 8px; align-items: flex-start; }
     .legend-box .row .badge { flex: none; }
+    .report-link { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 10px; border: 1px dashed var(--border); text-decoration: none; color: var(--text); font-size: 13.5px; }
+    .report-link[hidden] { display: none; }
+    .report-link b { color: var(--main); }
+    .report-link small { color: var(--sub); font-size: 12px; }
+    .report-link:hover, .report-link:focus-visible { border-color: var(--main); outline: none; }
 
     /* 칼로리 출처 배지 */
     .badge { display: inline-block; font-size: 11px; font-weight: 700; line-height: 1.5; padding: 0 7px; border-radius: 6px; white-space: nowrap; }
@@ -264,6 +269,10 @@
           <div class="row"><span class="badge badge-official">공식값</span><span>포장지 · 브랜드가 공개한 영양 정보 (편의점 제품 등)</span></div>
           <div class="row"><span class="badge badge-est">추정치</span><span>공식 정보가 없는 메뉴. 팀이 추정한 칼로리</span></div>
         </div>
+        <a class="report-link wide" id="report-link" target="_blank" rel="noopener" hidden>
+          <span>찾는 식당 · 메뉴가 없나요?<br><b>메뉴 제보하기 ↗</b></span>
+          <small>데이터팀이 확인한 뒤 식단 추천에 반영돼요</small>
+        </a>
       </div>
     </aside>
 
@@ -321,6 +330,8 @@
   const DEFAULT_INPUT = { lunchBudget: 15000, dinnerBudget: 20000, mode: 'maintain', work: ['off', 'off', 'ot1', 'ot1', 'off'], cheat: 'none' };
   const STORE_KEY = 'samilfit:v2';
   const SAMPLE_DATA = false; // 샘플 데이터로 돌릴 때만 true (화면 상단에 표시)
+  // 메뉴 제보 폼 주소 (구글 폼 등). 비워 두면 제보 링크를 숨긴다
+  const REPORT_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeQ0JX40fYWNZvibPIMkDMBatAE-K-me1dcSiktMiRDEwXa4A/viewform';
 
   // ---------- 저장 ----------
   function loadStore() {
@@ -694,6 +705,10 @@
       state.data = rows.filter((m) => m && m.id && m.open && Number.isFinite(m.kcal) && Number.isFinite(m.price));
       state.byId = Object.fromEntries(state.data.map((m) => [m.id, m]));
       $('#sample-flag').hidden = !SAMPLE_DATA;
+      if (/^https:\/\//.test(REPORT_URL)) {
+        $('#report-link').href = REPORT_URL;
+        $('#report-link').hidden = false;
+      }
       renderS1();
       renderAll();
     })
