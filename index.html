@@ -5,120 +5,128 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'">
   <meta name="description" content="삼일핏 — 다이어트 목표 · 야근 시간 · 식대 버짓으로 용산 일대 1주일 맞춤 식단과 칼로리를 짜주는 앱">
-  <meta name="theme-color" content="#D04A02">
+  <meta name="theme-color" content="#FFD4C2">
+  <meta name="color-scheme" content="light">
   <title>삼일핏</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23D04A02'/%3E%3Cpath d='M9 17c0-4 3-7 7-7s7 3 7 7' stroke='white' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='21' r='2.5' fill='white'/%3E%3C/svg%3E">
   <style>
+    /* 라이트 모드 전용 · 참고 이미지 색 (분홍 → 복숭아 → 코랄 그라데이션, 검정 글씨, 주황 포인트) */
     :root {
-      --main: #D04A02;
-      --main-soft: #FFE8D4;
+      --main: #FD5108;          /* 이미지 주황: 버튼 · 선택 · 차트 막대 */
+      --main-text: #D93F00;     /* 밝은 배경 위 주황 글씨 (가독성용 한 단계 진하게) */
+      --main-soft: #FFE9DF;
       --on-main: #FFFFFF;
       --cheat: #C52A4A;
       --cheat-soft: #FCE4EA;
       --ok: #1F7A4D;
-      --text: #2D2D2D;
+      --text: #111111;
       --sub: #6B6560;
-      --bg: #F6F6F6;
       --card: #FFFFFF;
-      --border: #E6DFDA;
+      --card-glass: rgba(255, 255, 255, .86);
+      --border: #F0E2DA;
+      --soft: #FFF6F2;
       --carb: #FFB600;
       --protein: #2F7FAE;
       --fat: #8E5BA8;
-      --shadow: 0 1px 2px rgba(45, 30, 20, .05), 0 6px 18px rgba(45, 30, 20, .06);
+      --shadow: 0 1px 2px rgba(90, 30, 10, .04), 0 14px 36px rgba(253, 81, 8, .08);
+      --page:
+        radial-gradient(60% 70% at 100% 0%, #FCAE8C 0%, rgba(252, 174, 140, 0) 70%),
+        radial-gradient(55% 60% at 0% 0%, #FFE0E6 0%, rgba(255, 224, 230, 0) 70%),
+        linear-gradient(180deg, #FFD4C2 0%, #FFF4EF 40%, #FFFFFF 85%);
       --font: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
       color-scheme: light;
     }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --main: #F2722E;          /* 다크 모드에서는 주황을 한 단계 밝게 */
-        --main-soft: #3D2516;
-        --on-main: #1A1210;
-        --cheat: #EE6A86;
-        --cheat-soft: #3B1C24;
-        --ok: #4CC38A;
-        --text: #EDE8E4;
-        --sub: #A39D97;
-        --bg: #161412;
-        --card: #201D1B;
-        --border: #3A3431;
-        --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 18px rgba(0,0,0,.25);
-        color-scheme: dark;
-      }
-    }
 
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 var(--font); word-break: keep-all; }
+    html { background: #FFFFFF; }
+    body { margin: 0; min-height: 100vh; background: var(--page); background-attachment: fixed; color: var(--text); font: 15px/1.5 var(--font); word-break: keep-all; }
     body.sheet-open { overflow: hidden; }
     h1, h2, h3, p { margin: 0; }
     button, input, select { font: inherit; color: inherit; }
+    [hidden] { display: none !important; }
     .num { font-variant-numeric: tabular-nums; }
     .sub { color: var(--sub); }
 
     /* 헤더 */
-    .header { background: var(--card); border-bottom: 1px solid var(--border); }
-    .header-inner { max-width: 1280px; margin: 0 auto; padding: 14px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .logo { color: var(--main); font-size: 24px; font-weight: 900; letter-spacing: -0.02em; }
-    .tagline { color: var(--sub); font-size: 14px; flex: 1; min-width: 220px; }
-    .sample-flag { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; border: 1px dashed var(--sub); color: var(--sub); white-space: nowrap; }
+    .header { max-width: 1200px; margin: 0 auto; padding: 20px 20px 0; display: flex; align-items: center; gap: 12px; }
+    .logo { font-size: 22px; font-weight: 900; letter-spacing: -0.03em; color: var(--text); text-decoration: none; }
+    .logo i { font-style: normal; color: var(--main); }
+    .sample-flag { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; border: 1px dashed var(--sub); color: var(--sub); }
 
-    /* 레이아웃: PC 왼쪽 S1 / 오른쪽 S2·S4, 모바일은 위→아래 */
-    .layout { max-width: 1280px; margin: 0 auto; padding: 16px; display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 16px; align-items: start; }
-    .right { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
-    .panel { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: var(--shadow); }
-    .panel-title { font-size: 17px; font-weight: 800; margin-bottom: 14px; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-    .panel-title small { font-size: 12.5px; font-weight: 600; color: var(--sub); }
-
-    /* S1 */
-    .s1 { display: flex; flex-direction: column; gap: 16px; }
-    .s1-fields { display: flex; flex-direction: column; gap: 16px; }
-    .s1 .panel-title { margin-bottom: 0; }
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    .field > label, .field > .label { font-size: 13.5px; font-weight: 700; }
-    .field .hint { font-size: 12px; color: var(--sub); }
-    .money { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 10px; background: var(--card); padding: 0 12px; }
-    .money:focus-within { border-color: var(--main); }
-    .money input { flex: 1; min-width: 0; border: 0; background: transparent; padding: 10px 0; font-size: 16px; font-weight: 700; text-align: right; outline: none; -moz-appearance: textfield; }
-    .money input::-webkit-outer-spin-button, .money input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-    .money span { margin-left: 6px; color: var(--sub); font-size: 14px; }
-    .modes { display: flex; flex-direction: column; gap: 6px; }
-    .mode-btn { display: flex; justify-content: space-between; align-items: center; gap: 8px; text-align: left; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); cursor: pointer; font-weight: 600; font-size: 14px; }
-    .mode-btn small { color: var(--sub); font-weight: 600; font-size: 12px; white-space: nowrap; }
-    .mode-btn[aria-pressed="true"] { border-color: var(--main); background: var(--main-soft); color: var(--main); }
-    .mode-btn[aria-pressed="true"] small { color: var(--main); }
-    .work-grid { display: grid; grid-template-columns: 26px 1fr; gap: 6px 8px; align-items: center; }
-    .work-grid b { font-size: 14px; text-align: center; }
-    select { width: 100%; padding: 9px 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); font-size: 14px; }
-    select:focus, .mode-btn:focus-visible, .btn:focus-visible, .meal:focus-visible, .alt:focus-visible { outline: 2px solid var(--main); outline-offset: 2px; }
-    .btn { border: 1px solid var(--main); background: var(--main); color: var(--on-main); padding: 11px 14px; border-radius: 10px; font-weight: 800; cursor: pointer; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--main); background: var(--main); color: var(--on-main); padding: 11px 18px; border-radius: 12px; font-weight: 800; cursor: pointer; text-decoration: none; white-space: nowrap; transition: transform .06s, filter .15s; }
+    .btn:hover { filter: brightness(1.06); }
     .btn:active { transform: scale(.98); }
     .btn-ghost { background: var(--card); color: var(--text); border-color: var(--border); }
-    .jump { display: none; text-align: center; text-decoration: none; margin-top: 8px; }
-    #s2 { scroll-margin-top: 12px; }
-    .legend-box { border-top: 1px solid var(--border); padding-top: 14px; display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; color: var(--sub); }
-    .legend-box .row { display: flex; gap: 8px; align-items: flex-start; }
-    .legend-box .row .badge { flex: none; }
-    .report-link { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 10px; border: 1px dashed var(--border); text-decoration: none; color: var(--text); font-size: 13.5px; }
-    .report-link[hidden] { display: none; }
-    .report-link b { color: var(--main); }
-    .report-link small { color: var(--sub); font-size: 12px; }
-    .report-link:hover, .report-link:focus-visible { border-color: var(--main); outline: none; }
+    .btn-ghost:hover { border-color: var(--main); filter: none; }
+    .btn-lg { width: 100%; padding: 16px 20px; font-size: 17px; border-radius: 14px; }
+    .btn:focus-visible, .opt:focus-visible, .seg button:focus-visible, .chip-btn:focus-visible, .meal:focus-visible, .alt:focus-visible { outline: 2px solid var(--main); outline-offset: 2px; }
 
-    /* 칼로리 출처 배지 */
+    /* ---------- 화면 1: 조건 입력 ---------- */
+    .setup { max-width: 640px; margin: 0 auto; padding: 36px 20px 56px; }
+    .hero { margin-bottom: 26px; }
+    .eyebrow { font-size: 13px; font-weight: 800; color: var(--main-text); letter-spacing: .02em; margin-bottom: 10px; }
+    .hero h1 { font-size: 34px; line-height: 1.22; font-weight: 900; letter-spacing: -0.035em; }
+    .hero p:not(.eyebrow) { margin-top: 12px; color: var(--sub); font-size: 15.5px; }
+    .form { background: var(--card-glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 22px; padding: 26px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 26px; }
+    .q { display: flex; flex-direction: column; gap: 10px; }
+    .q-title { font-size: 16px; font-weight: 800; display: flex; align-items: baseline; gap: 8px; }
+    .q-title small { font-size: 12.5px; font-weight: 600; color: var(--sub); }
+    .q-help { font-size: 12.5px; color: var(--sub); }
+    .budgets { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .money { min-width: 0; display: flex; flex-direction: column; gap: 4px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 14px; background: var(--card); }
+    .money:focus-within { border-color: var(--main); box-shadow: 0 0 0 3px color-mix(in srgb, var(--main) 15%, transparent); }
+    .money label { font-size: 12.5px; font-weight: 700; color: var(--sub); }
+    .money div { display: flex; align-items: baseline; gap: 4px; }
+    .money input { flex: 1; width: 100%; min-width: 0; border: 0; background: transparent; padding: 0; font-size: 22px; font-weight: 800; outline: none; -moz-appearance: textfield; }
+    .money input::-webkit-outer-spin-button, .money input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .money span { color: var(--sub); font-weight: 700; }
+    .opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .opt { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; text-align: left; padding: 14px; border-radius: 14px; border: 1px solid var(--border); background: var(--card); cursor: pointer; }
+    .opt b { font-size: 14.5px; line-height: 1.3; }
+    .opt small { font-size: 12px; font-weight: 700; color: var(--sub); }
+    .opt[aria-pressed="true"] { border-color: var(--main); background: var(--main-soft); box-shadow: inset 0 0 0 1px var(--main); }
+    .opt[aria-pressed="true"] b, .opt[aria-pressed="true"] small { color: var(--main-text); }
+    .work { display: flex; flex-direction: column; gap: 6px; }
+    .work-row { display: grid; grid-template-columns: 30px 1fr; align-items: center; gap: 8px; }
+    .work-row > b { font-size: 15px; text-align: center; }
+    .seg { display: grid; grid-template-columns: repeat(3, 1fr); padding: 3px; gap: 3px; border-radius: 12px; background: var(--soft); border: 1px solid var(--border); }
+    .seg button { border: 0; background: transparent; padding: 8px 4px; border-radius: 9px; font-size: 13.5px; font-weight: 700; color: var(--sub); cursor: pointer; }
+    .seg button[aria-pressed="true"] { background: var(--card); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+    .seg button[aria-pressed="true"][data-work="ot1"], .seg button[aria-pressed="true"][data-work="ot2"] { color: var(--main-text); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip-btn { padding: 9px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--card); font-size: 14px; font-weight: 700; cursor: pointer; }
+    .chip-btn[aria-pressed="true"] { border-color: var(--cheat); background: var(--cheat-soft); color: var(--cheat); }
+    .chip-btn[data-cheat="none"][aria-pressed="true"] { border-color: var(--text); background: var(--card); color: var(--text); }
+
+    /* ---------- 화면 2: 식단표 ---------- */
+    .result { max-width: 1200px; margin: 0 auto; padding: 18px 20px 56px; display: flex; flex-direction: column; gap: 18px; }
+    .summary { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 12px; border-radius: 14px; background: var(--card-glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--border); }
+    .summary-label { font-size: 12px; font-weight: 800; color: var(--sub); margin-right: 2px; }
+    .pill { font-size: 12.5px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--soft); border: 1px solid var(--border); white-space: nowrap; }
+    .pill.cheat { background: var(--cheat-soft); color: var(--cheat); border-color: transparent; }
+    .summary .btn { margin-left: auto; padding: 7px 12px; font-size: 13px; border-radius: 10px; }
+    .result-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .result-head h1 { font-size: 30px; font-weight: 900; letter-spacing: -0.035em; }
+    .result-head p { color: var(--sub); font-size: 14px; margin-top: 4px; }
+    .panel { background: var(--card-glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 20px; padding: 20px; box-shadow: var(--shadow); }
+    .panel-title { font-size: 18px; font-weight: 800; margin-bottom: 14px; }
+    .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12.5px; color: var(--sub); margin-top: 14px; }
+    .legend span { display: inline-flex; gap: 6px; align-items: center; }
+
     .badge { display: inline-block; font-size: 11px; font-weight: 700; line-height: 1.5; padding: 0 7px; border-radius: 6px; white-space: nowrap; }
     .badge-official { color: var(--ok); border: 1px solid var(--ok); }
     .badge-est { color: var(--sub); border: 1px dashed var(--sub); }
     .tag { display: inline-block; font-size: 11px; font-weight: 800; padding: 0 7px; border-radius: 6px; line-height: 1.6; white-space: nowrap; }
-    .tag-ot { background: var(--main-soft); color: var(--main); }
+    .tag-ot { background: var(--main-soft); color: var(--main-text); }
     .tag-cheat { background: var(--cheat); color: #fff; }
 
-    /* S2 */
-    .week { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+    .week { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
     .day { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-    .day-head { display: flex; justify-content: space-between; align-items: baseline; padding: 0 2px 6px; border-bottom: 2px solid var(--border); }
-    .day-head b { font-size: 17px; }
+    .day-head { display: flex; justify-content: space-between; align-items: baseline; padding: 0 2px 6px; border-bottom: 2px solid var(--text); }
+    .day-head b { font-size: 18px; font-weight: 900; }
     .day-head span { font-size: 13px; font-weight: 700; }
-    .meal { display: flex; flex-direction: column; gap: 5px; width: 100%; text-align: left; padding: 10px; border-radius: 11px; border: 1px solid var(--border); background: var(--card); cursor: pointer; transition: border-color .15s, transform .06s; }
-    .meal:hover { border-color: var(--main); }
+    .meal { display: flex; flex-direction: column; gap: 5px; width: 100%; text-align: left; padding: 11px; border-radius: 13px; border: 1px solid var(--border); background: var(--card); cursor: pointer; transition: border-color .15s, transform .06s, box-shadow .15s; }
+    .meal:hover { border-color: var(--main); box-shadow: 0 4px 14px rgba(253, 81, 8, .12); }
     .meal:active { transform: scale(.985); }
     .meal.cheat { background: var(--cheat-soft); border-color: color-mix(in srgb, var(--cheat) 45%, var(--border)); }
     .meal.cheat:hover { border-color: var(--cheat); }
@@ -129,12 +137,10 @@
     .meal-place { font-size: 12px; color: var(--sub); }
     .meal-nums { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; font-size: 13px; flex-wrap: wrap; }
     .meal-nums b { font-size: 14px; }
-    .meal-foot { display: flex; justify-content: flex-start; }
-    .meal.free, .meal.empty { cursor: default; border-style: dashed; background: transparent; color: var(--sub); }
-    .meal.free:hover, .meal.empty:hover { border-color: var(--border); }
+    .meal.free, .meal.empty { cursor: default; border-style: dashed; background: transparent; color: var(--sub); box-shadow: none; }
+    .meal.free:hover, .meal.empty:hover { border-color: var(--border); box-shadow: none; }
     .meal.free:active, .meal.empty:active { transform: none; }
-    .meal.empty { border-color: var(--cheat); color: var(--cheat); }
-    .meal.empty:hover { border-color: var(--cheat); }
+    .meal.empty, .meal.empty:hover { border-color: var(--cheat); color: var(--cheat); }
     .free-text, .empty-text { font-size: 13px; font-weight: 600; }
 
     .mbar { display: flex; height: 6px; border-radius: 99px; overflow: hidden; background: var(--border); }
@@ -143,21 +149,25 @@
     .c-protein { background: var(--protein); }
     .c-fat { background: var(--fat); }
 
-    /* S4 */
+    .cta { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; padding: 18px 20px; border-radius: 20px; border: 1px dashed color-mix(in srgb, var(--main) 50%, var(--border)); background: var(--card-glass); }
+    .cta b { font-size: 16px; }
+    .cta p { color: var(--sub); font-size: 13.5px; margin-top: 2px; }
+
+    /* 리포트 */
     .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
-    .stat { border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; }
+    .stat { border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; background: var(--card); display: flex; flex-direction: column; gap: 2px; }
     .stat .k { font-size: 12.5px; font-weight: 700; color: var(--sub); }
-    .stat .v { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+    .stat .v { font-size: 24px; font-weight: 900; letter-spacing: -0.02em; }
     .stat .d { font-size: 12.5px; font-weight: 700; }
     .good { color: var(--ok); }
     .bad { color: var(--cheat); }
-    .charts { display: grid; grid-template-columns: 3fr 2fr; gap: 16px; }
-    .chart-box { border: 1px solid var(--border); border-radius: 12px; padding: 14px; min-width: 0; }
+    .charts { display: grid; grid-template-columns: 3fr 2fr; gap: 12px; }
+    .chart-box { border: 1px solid var(--border); border-radius: 14px; padding: 16px; min-width: 0; background: var(--card); }
     .chart-box h3 { font-size: 14px; margin-bottom: 10px; }
     .bars { display: flex; gap: 10px; height: 180px; }
     .bcol { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
     .btrack { position: relative; flex: 1; width: 100%; max-width: 46px; }
-    .bfill { position: absolute; left: 0; right: 0; bottom: 0; background: var(--main); border-radius: 6px 6px 2px 2px; }
+    .bfill { position: absolute; left: 0; right: 0; bottom: 0; background: var(--main); border-radius: 7px 7px 2px 2px; }
     .bfill.cheat { background: var(--cheat); }
     .bgoal { position: absolute; left: -5px; right: -5px; border-top: 2px dashed var(--sub); }
     .bval { font-size: 11.5px; font-weight: 700; }
@@ -173,29 +183,29 @@
     .ratio-list li span:nth-child(2) { flex: 1; }
     .ratio-note { font-size: 12px; color: var(--sub); margin-top: 10px; }
 
-    /* S3 메뉴 상세 시트 */
+    /* 메뉴 상세 시트 */
     .backdrop { position: fixed; inset: 0; background: rgba(20, 12, 8, .45); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 40; }
     .backdrop.open { opacity: 1; pointer-events: auto; }
     .sheet { position: fixed; left: 50%; bottom: 0; width: min(560px, 100%); max-height: 86vh; overflow: auto; transform: translate(-50%, 105%); transition: transform .25s ease; z-index: 41;
-      background: var(--card); border-radius: 18px 18px 0 0; padding: 10px 20px calc(20px + env(safe-area-inset-bottom)); box-shadow: 0 -10px 40px rgba(0,0,0,.2); }
+      background: var(--card); border-radius: 22px 22px 0 0; padding: 10px 20px calc(20px + env(safe-area-inset-bottom)); box-shadow: 0 -10px 40px rgba(0,0,0,.2); }
     .sheet.open { transform: translate(-50%, 0); }
     .grip { width: 40px; height: 4px; border-radius: 9px; background: var(--border); margin: 0 auto 14px; }
     .sheet-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
-    .sheet-head h2 { font-size: 20px; line-height: 1.3; }
+    .sheet-head h2 { font-size: 21px; line-height: 1.3; font-weight: 900; }
     .close { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border); background: var(--card); cursor: pointer; font-size: 16px; }
     .sheet-sub { color: var(--sub); font-size: 14px; margin-top: 4px; }
     .facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 16px 0 10px; }
-    .fact { background: var(--bg); border-radius: 10px; padding: 10px 12px; }
+    .fact { background: var(--soft); border-radius: 12px; padding: 10px 12px; }
     .fact .k { font-size: 12px; color: var(--sub); font-weight: 700; }
     .fact .v { font-size: 18px; font-weight: 800; }
-    .note { margin: -2px 0 10px; padding: 9px 12px; border-radius: 10px; background: var(--bg); font-size: 13.5px; }
+    .note { margin: -2px 0 10px; padding: 9px 12px; border-radius: 12px; background: var(--soft); font-size: 13.5px; }
     .macros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .macro { border-radius: 10px; padding: 8px 10px; border: 1px solid var(--border); font-size: 13px; }
+    .macro { border-radius: 12px; padding: 8px 10px; border: 1px solid var(--border); font-size: 13px; }
     .macro b { display: block; font-size: 16px; }
     .source-line { display: flex; gap: 8px; align-items: center; margin-top: 12px; font-size: 13px; color: var(--sub); }
     .alts-title { font-size: 15px; margin: 22px 0 8px; }
     .alts { display: flex; flex-direction: column; gap: 6px; }
-    .alt { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; text-align: left; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); cursor: pointer; }
+    .alt { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; text-align: left; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); cursor: pointer; }
     .alt:hover { border-color: var(--main); background: var(--main-soft); }
     .alt .an { font-weight: 800; font-size: 14px; }
     .alt .ar { color: var(--sub); font-size: 12.5px; }
@@ -203,112 +213,133 @@
     .alt .ap { text-align: right; color: var(--sub); font-size: 12.5px; }
     .no-alt { color: var(--sub); font-size: 13.5px; }
 
-    .footer { text-align: center; color: var(--sub); font-size: 12px; padding: 8px 16px 32px; }
+    .footer { text-align: center; color: var(--sub); font-size: 12px; padding: 0 20px 32px; }
 
     /* 반응형 */
-    @media (max-width: 1080px) {
-      .layout { grid-template-columns: minmax(0, 1fr); }
-      .s1-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-      .s1-fields .wide { grid-column: span 2; }
+    @media (max-width: 1000px) {
+      .week { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
-    @media (max-width: 720px) {
-      .jump { display: block; }
-      .s1-fields { display: flex; flex-direction: column; }
+    @media (max-width: 640px) {
+      .setup { padding-top: 24px; }
+      .hero h1 { font-size: 28px; }
+      .form { padding: 20px 16px; border-radius: 18px; }
+      .opts { grid-template-columns: 1fr; }
+      .opt { flex-direction: row; justify-content: space-between; align-items: center; }
+      .money input { font-size: 20px; }
+      .result-head h1 { font-size: 25px; }
       .week { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+      .panel { padding: 16px; }
       .stats { grid-template-columns: minmax(0, 1fr); }
       .stat { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
       .stat .k { flex-basis: 100%; }
       .charts { grid-template-columns: minmax(0, 1fr); }
-      .facts { grid-template-columns: 1fr 1fr; }
+      .summary .btn { margin-left: 0; }
+      .cta .btn { width: 100%; }
     }
   </style>
 </head>
 <body>
   <header class="header">
-    <div class="header-inner">
-      <span class="logo">삼일핏</span>
-      <p class="tagline">다이어트 목표 · 야근 시간 · 식대 버짓을 넣으면 용산 일대 식당과 편의점 메뉴로 1주일 맞춤 식단과 칼로리를 짜드려요</p>
-      <span class="sample-flag" id="sample-flag" hidden>샘플 데이터</span>
-    </div>
+    <a class="logo" href="#setup">삼일핏<i>.</i></a>
+    <span class="sample-flag" id="sample-flag" hidden>샘플 데이터</span>
   </header>
 
-  <main class="layout">
-    <!-- S1 조건 입력 패널 -->
-    <aside class="panel s1" aria-labelledby="s1-title">
-      <h2 class="panel-title" id="s1-title">조건 입력</h2>
-      <div class="s1-fields">
-        <div class="field">
-          <label for="lunch-budget">점심 버짓</label>
-          <div class="money"><input id="lunch-budget" type="number" inputmode="numeric" min="1000" step="1000" class="num"><span>원</span></div>
-          <span class="hint">이 금액 이하 메뉴만 추천</span>
+  <!-- 화면 1: 조건 입력 -->
+  <main class="setup" id="screen-setup">
+    <section class="hero">
+      <p class="eyebrow">Exclusive for 삼일 · 용산 주간 식단</p>
+      <h1>이번 주 식단,<br>조건만 정하면 끝.</h1>
+      <p>식대 버짓 · 식단 상태 · 야근 일정을 고르면 용산 일대 식당과 편의점 메뉴로 1주일 식단과 칼로리를 짜드려요.</p>
+    </section>
+
+    <form class="form" id="setup-form" novalidate>
+      <div class="q">
+        <span class="q-title">식대 버짓 <small>1,000원 단위</small></span>
+        <div class="budgets">
+          <div class="money">
+            <label for="lunch-budget">점심</label>
+            <div><input id="lunch-budget" type="number" inputmode="numeric" min="1000" step="1000" class="num"><span>원</span></div>
+          </div>
+          <div class="money">
+            <label for="dinner-budget">저녁 식대</label>
+            <div><input id="dinner-budget" type="number" inputmode="numeric" min="1000" step="1000" class="num"><span>원</span></div>
+          </div>
         </div>
-        <div class="field">
-          <label for="dinner-budget">저녁 식대 버짓</label>
-          <div class="money"><input id="dinner-budget" type="number" inputmode="numeric" min="1000" step="1000" class="num"><span>원</span></div>
-          <span class="hint">야근하는 날 저녁(과 야식)에만 적용</span>
-        </div>
-        <div class="field wide">
-          <span class="label" id="mode-label">식단 상태</span>
-          <div class="modes" role="group" aria-labelledby="mode-label" id="modes"></div>
-        </div>
-        <div class="field wide">
-          <span class="label">요일별 근무 형태</span>
-          <div class="work-grid" id="work"></div>
-        </div>
-        <div class="field">
-          <label for="cheat">치팅 끼니</label>
-          <select id="cheat"></select>
-          <span class="hint">고른 끼니만 치팅 기준(800 kcal)으로 추천</span>
-        </div>
-        <div class="field" style="justify-content:flex-end">
-          <button class="btn" id="reshuffle" type="button">↻ 식단 다시 짜기</button>
-          <a class="btn btn-ghost jump" href="#s2">이번 주 식단 보기 ↓</a>
-        </div>
-        <div class="legend-box wide" aria-label="칼로리 출처 안내">
-          <b style="color:var(--text)">칼로리 출처 안내</b>
-          <div class="row"><span class="badge badge-official">공식값</span><span>포장지 · 브랜드가 공개한 영양 정보 (편의점 제품 등)</span></div>
-          <div class="row"><span class="badge badge-est">추정치</span><span>공식 정보가 없는 메뉴. 팀이 추정한 칼로리</span></div>
-        </div>
-        <a class="report-link wide" id="report-link" target="_blank" rel="noopener" hidden>
-          <span>찾는 식당 · 메뉴가 없나요?<br><b>메뉴 제보하기 ↗</b></span>
-          <small>데이터팀이 확인한 뒤 식단 추천에 반영돼요</small>
-        </a>
+        <span class="q-help">저녁 식대는 야근하는 날 저녁(과 야식)에만 적용돼요.</span>
       </div>
-    </aside>
 
-    <div class="right">
-      <!-- S2 이번 주 식단표 -->
-      <section class="panel" id="s2" aria-labelledby="s2-title">
-        <h2 class="panel-title" id="s2-title">이번 주 식단표 <small>카드를 누르면 상세 · 메뉴 바꾸기</small></h2>
-        <div class="week" id="week"></div>
-      </section>
+      <div class="q">
+        <span class="q-title" id="mode-label">식단 상태</span>
+        <div class="opts" role="group" aria-labelledby="mode-label" id="modes"></div>
+      </div>
 
-      <!-- S4 주간 영양 리포트 · 식비 예측 -->
-      <section class="panel" aria-labelledby="s4-title">
-        <h2 class="panel-title" id="s4-title">주간 영양 리포트 · 식비 예측</h2>
-        <div class="stats" id="stats"></div>
-        <div class="charts">
-          <div class="chart-box">
-            <h3>요일별 칼로리</h3>
-            <div class="bars" id="bars" role="img" aria-label="요일별 섭취 칼로리와 목표"></div>
-            <div class="chart-legend">
-              <span><i class="sw" style="background:var(--main)"></i>섭취</span>
-              <span><i class="sw" style="background:var(--cheat)"></i>치팅 있는 날</span>
-              <span><i class="sw-line"></i>목표</span>
-            </div>
-          </div>
-          <div class="chart-box">
-            <h3>주간 탄단지 비율</h3>
-            <div id="ratio"></div>
+      <div class="q">
+        <span class="q-title">요일별 근무 형태</span>
+        <div class="work" id="work"></div>
+        <span class="q-help">1차 야근: 18~20시 저녁 · 심야 야근: 저녁 + 심야 야식</span>
+      </div>
+
+      <div class="q">
+        <span class="q-title" id="cheat-label">치팅 끼니 <small>선택 · 800 kcal 기준</small></span>
+        <div class="chips" role="group" aria-labelledby="cheat-label" id="cheats"></div>
+      </div>
+
+      <button class="btn btn-lg" type="submit">이번 주 식단 짜기 →</button>
+    </form>
+  </main>
+
+  <!-- 화면 2: 식단표 · 리포트 -->
+  <main class="result" id="screen-plan" hidden>
+    <div class="summary" id="summary" aria-label="선택한 조건"></div>
+
+    <div class="result-head">
+      <div>
+        <h1>이번 주 식단</h1>
+        <p>카드를 누르면 메뉴 상세와 다른 메뉴로 바꾸기를 볼 수 있어요.</p>
+      </div>
+      <button class="btn btn-ghost" id="reshuffle" type="button">↻ 식단 다시 짜기</button>
+    </div>
+
+    <section class="panel" aria-label="이번 주 식단표">
+      <div class="week" id="week"></div>
+      <div class="legend" aria-label="칼로리 출처 안내">
+        <span><span class="badge badge-official">공식값</span>포장지 · 브랜드가 공개한 영양 정보</span>
+        <span><span class="badge badge-est">추정치</span>공식 정보가 없어 팀이 추정한 칼로리</span>
+      </div>
+    </section>
+
+    <section class="cta" id="report-cta" hidden>
+      <div>
+        <b>마음에 드는 메뉴가 없나요?</b>
+        <p>가고 싶은 식당 · 먹고 싶은 메뉴를 알려주세요. 데이터팀이 확인한 뒤 식단 추천에 반영해요.</p>
+      </div>
+      <a class="btn" id="report-link" target="_blank" rel="noopener">메뉴 제보하기 ↗</a>
+    </section>
+
+    <section class="panel" aria-labelledby="s4-title">
+      <h2 class="panel-title" id="s4-title">주간 영양 리포트 · 식비 예측</h2>
+      <div class="stats" id="stats"></div>
+      <div class="charts">
+        <div class="chart-box">
+          <h3>요일별 칼로리</h3>
+          <div class="bars" id="bars" role="img" aria-label="요일별 섭취 칼로리와 목표"></div>
+          <div class="chart-legend">
+            <span><i class="sw" style="background:var(--main)"></i>섭취</span>
+            <span><i class="sw" style="background:var(--cheat)"></i>치팅 있는 날</span>
+            <span><i class="sw-line"></i>목표</span>
           </div>
         </div>
-      </section>
-    </div>
+        <div class="chart-box">
+          <h3>주간 탄단지 비율</h3>
+          <div id="ratio"></div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">삼일핏 · 2026 Discover B-4 · 칼로리는 메뉴별 출처 배지(공식값 / 추정치)를 참고하세요</footer>
 
-  <!-- S3 메뉴 상세 시트 -->
+  <!-- 메뉴 상세 시트 -->
   <div class="backdrop" id="backdrop"></div>
   <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" aria-hidden="true"></section>
 
@@ -319,18 +350,18 @@
   const DAYS = ['월', '화', '수', '목', '금'];
   const AREA = { ls: 'LS타워·아모레', yr: '신용산·용리단길', ipark: '아이파크몰', cvs: '편의점' };
   const MODES = [
-    { id: 'tight', label: '타이트한 다이어트', target: 450 },
-    { id: 'maintain', label: '건강 유지 / 식단 관리', target: 600 },
-    { id: 'cheat', label: '적당한 치팅', target: 800 },
+    { id: 'tight', label: '타이트한 다이어트', short: '타이트 다이어트', target: 450 },
+    { id: 'maintain', label: '건강 유지 / 식단 관리', short: '건강 유지', target: 600 },
+    { id: 'cheat', label: '적당한 치팅', short: '적당한 치팅', target: 800 },
   ];
-  const WORK = { off: '칼퇴 / 일반 저녁', ot1: '1차 야근 (18~20시 식사)', ot2: '2차·심야 야근 (야식 추가)' };
+  const WORK = { off: '칼퇴', ot1: '1차 야근', ot2: '심야 야근' };
   const CHEATS = [['none', '없음'], ['4-lunch', '금요일 점심'], ['4-dinner', '금요일 저녁'], ['2-dinner', '수요일 저녁']];
   const CHEAT_TARGET = 800;
   const MEAL_LABEL = { lunch: '점심', dinner: '저녁', snack: '심야 야식' };
   const DEFAULT_INPUT = { lunchBudget: 15000, dinnerBudget: 20000, mode: 'maintain', work: ['off', 'off', 'ot1', 'ot1', 'off'], cheat: 'none' };
   const STORE_KEY = 'samilfit:v2';
   const SAMPLE_DATA = false; // 샘플 데이터로 돌릴 때만 true (화면 상단에 표시)
-  // 메뉴 제보 폼 주소 (구글 폼 등). 비워 두면 제보 링크를 숨긴다
+  // 메뉴 제보 폼 주소 (구글 폼 등). 비워 두면 제보 버튼을 숨긴다
   const REPORT_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeQ0JX40fYWNZvibPIMkDMBatAE-K-me1dcSiktMiRDEwXa4A/viewform';
 
   // ---------- 저장 ----------
@@ -369,6 +400,7 @@
     input: sanitizeInput(stored.input),
     seed: Number.isFinite(stored.seed) ? stored.seed : newSeed(),
     plan: stored.plan || null, // { sig, picks: { slotKey: menuId | null } }
+    draft: null,               // 조건 입력 화면에서 고치는 중인 값 (식단 짜기를 눌러야 반영)
     sheetKey: null,
   };
 
@@ -387,8 +419,6 @@
   }
 
   // ---------- 추천 로직 (설계서 4-1, 4-2) ----------
-  const modeTarget = () => MODES.find((m) => m.id === state.input.mode).target;
-
   // 그 주에 추천할 끼니 목록. 칼퇴인 날 저녁은 '자율 식사'(추천 없음)
   function buildSlots(input) {
     const base = MODES.find((m) => m.id === input.mode).target;
@@ -458,20 +488,43 @@
     return buildSlots(state.input).map((s) => ({ ...s, menu: s.free ? null : state.byId[state.plan.picks[s.key]] || null }));
   }
 
-  // ---------- S1 렌더 ----------
-  function renderS1() {
-    const i = state.input;
-    $('#lunch-budget').value = i.lunchBudget;
-    $('#dinner-budget').value = i.dinnerBudget;
+  // ---------- 화면 1: 조건 입력 ----------
+  function renderSetup() {
+    const d = state.draft;
+    $('#lunch-budget').value = d.lunchBudget;
+    $('#dinner-budget').value = d.dinnerBudget;
     $('#modes').innerHTML = MODES.map((m) =>
-      `<button type="button" class="mode-btn" data-mode="${m.id}" aria-pressed="${m.id === i.mode}">${esc(m.label)}<small class="num">끼니당 ${m.target} kcal</small></button>`).join('');
-    $('#work').innerHTML = DAYS.map((d, idx) =>
-      `<b>${d}</b><select data-day="${idx}" aria-label="${d}요일 근무 형태">${Object.entries(WORK).map(([k, l]) =>
-        `<option value="${k}" ${i.work[idx] === k ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select>`).join('');
-    $('#cheat').innerHTML = CHEATS.map(([k, l]) => `<option value="${k}" ${i.cheat === k ? 'selected' : ''}>${l}</option>`).join('');
+      `<button type="button" class="opt" data-mode="${m.id}" aria-pressed="${m.id === d.mode}"><b>${esc(m.label)}</b><small class="num">끼니당 ${m.target} kcal</small></button>`).join('');
+    $('#work').innerHTML = DAYS.map((day, idx) =>
+      `<div class="work-row"><b>${day}</b><div class="seg" role="group" aria-label="${day}요일 근무 형태">${Object.entries(WORK).map(([k, l]) =>
+        `<button type="button" data-day="${idx}" data-work="${k}" aria-pressed="${d.work[idx] === k}">${l}</button>`).join('')}</div></div>`).join('');
+    $('#cheats').innerHTML = CHEATS.map(([k, l]) =>
+      `<button type="button" class="chip-btn" data-cheat="${k}" aria-pressed="${d.cheat === k}">${l}</button>`).join('');
   }
 
-  // ---------- S2 렌더 ----------
+  // ---------- 화면 2: 선택한 조건 요약 ----------
+  function workSummary(work) {
+    const days = (t) => work.map((w, i) => (w === t ? DAYS[i] : null)).filter(Boolean).join('·');
+    const parts = [];
+    if (days('ot1')) parts.push(`${days('ot1')} 1차 야근`);
+    if (days('ot2')) parts.push(`${days('ot2')} 심야 야근`);
+    return parts.length ? parts.join(' · ') : '전 요일 칼퇴';
+  }
+
+  function renderSummary() {
+    const i = state.input;
+    const cheat = CHEATS.find(([k]) => k === i.cheat)[1];
+    $('#summary').innerHTML = `
+      <span class="summary-label">내 조건</span>
+      <span class="pill num">점심 ${fmt(i.lunchBudget)}원</span>
+      <span class="pill num">저녁 ${fmt(i.dinnerBudget)}원</span>
+      <span class="pill">${esc(MODES.find((m) => m.id === i.mode).short)}</span>
+      <span class="pill">${esc(workSummary(i.work))}</span>
+      <span class="pill ${i.cheat === 'none' ? '' : 'cheat'}">${i.cheat === 'none' ? '치팅 없음' : `치팅 ${esc(cheat)}`}</span>
+      <a class="btn btn-ghost" href="#setup">조건 수정</a>`;
+  }
+
+  // ---------- 식단표 ----------
   function mealCard(s) {
     const label = MEAL_LABEL[s.meal];
     if (s.free) {
@@ -493,11 +546,11 @@
       <span class="meal-place">${esc(m.restaurant)} · ${AREA[m.area]}</span>
       ${bar}
       <div class="meal-nums num"><b>${fmt(m.kcal)} kcal</b><span>${fmt(m.price)}원</span></div>
-      <div class="meal-foot">${sourceBadge(m)}</div>
+      <div>${sourceBadge(m)}</div>
     </button>`;
   }
 
-  function renderS2(week) {
+  function renderWeek(week) {
     $('#week').innerHTML = DAYS.map((d, day) => {
       const slots = week.filter((s) => s.day === day);
       const total = slots.reduce((t, s) => t + (s.menu ? s.menu.kcal : 0), 0);
@@ -508,8 +561,8 @@
     }).join('');
   }
 
-  // ---------- S4 렌더 ----------
-  function renderS4(week) {
+  // ---------- 주간 영양 리포트 · 식비 예측 ----------
+  function renderReport(week) {
     const rec = week.filter((s) => !s.free);            // 추천 대상 끼니
     const filled = rec.filter((s) => s.menu);           // 실제로 추천된 끼니
     const total = filled.reduce((t, s) => t + s.menu.kcal, 0);
@@ -567,15 +620,31 @@
       <p class="ratio-note">탄단지 정보가 있는 ${withMacro.length}끼 기준</p>`;
   }
 
-  function renderAll() {
+  function renderPlan() {
     ensurePlan();
     saveStore();
     const week = currentWeek();
-    renderS2(week);
-    renderS4(week);
+    renderSummary();
+    renderWeek(week);
+    renderReport(week);
   }
 
-  // ---------- S3 메뉴 상세 시트 ----------
+  // ---------- 화면 전환 ----------
+  function route() {
+    closeSheet();
+    const onPlan = location.hash === '#plan';
+    $('#screen-setup').hidden = onPlan;
+    $('#screen-plan').hidden = !onPlan;
+    if (onPlan) {
+      renderPlan();
+    } else {
+      state.draft = structuredClone(state.input);
+      renderSetup();
+    }
+    window.scrollTo(0, 0);
+  }
+
+  // ---------- 메뉴 상세 시트 ----------
   let lastFocus = null;
   function openSheet(key) {
     const slot = currentWeek().find((s) => s.key === key);
@@ -638,50 +707,51 @@
     (card || lastFocus)?.focus?.();
   }
 
-  // ---------- 이벤트 ----------
-  function setInput(patch) {
-    state.input = sanitizeInput({ ...state.input, ...patch });
-    renderAll(); // 조건이 바뀌면 바로 다시 계산
+  // ---------- 이벤트: 조건 입력 ----------
+  function pressOnly(container, btn) {
+    container.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
   }
-
-  let budgetTimer;
-  ['lunch', 'dinner'].forEach((k) => {
-    const el = $(`#${k}-budget`);
-    const key = `${k}Budget`;
-    el.addEventListener('input', () => {
-      clearTimeout(budgetTimer);
-      budgetTimer = setTimeout(() => {
-        const v = Number(el.value);
-        if (v >= 1000) setInput({ [key]: v });
-      }, 250);
-    });
-    el.addEventListener('change', () => {
-      clearTimeout(budgetTimer);
-      setInput({ [key]: el.value });
-      el.value = state.input[key]; // 1,000원 단위로 정리
-    });
-  });
-
   $('#modes').addEventListener('click', (e) => {
     const b = e.target.closest('[data-mode]');
     if (!b) return;
-    setInput({ mode: b.dataset.mode });
-    document.querySelectorAll('#modes .mode-btn').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    state.draft.mode = b.dataset.mode;
+    pressOnly($('#modes'), b);
   });
-  $('#work').addEventListener('change', (e) => {
-    const s = e.target.closest('[data-day]');
-    if (!s) return;
-    const work = [...state.input.work];
-    work[+s.dataset.day] = s.value;
-    setInput({ work });
+  $('#work').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-work]');
+    if (!b) return;
+    state.draft.work[+b.dataset.day] = b.dataset.work;
+    pressOnly(b.parentElement, b);
   });
-  $('#cheat').addEventListener('change', (e) => setInput({ cheat: e.target.value }));
+  $('#cheats').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-cheat]');
+    if (!b) return;
+    state.draft.cheat = b.dataset.cheat;
+    pressOnly($('#cheats'), b);
+  });
+  ['lunch', 'dinner'].forEach((k) => {
+    const el = $(`#${k}-budget`);
+    el.addEventListener('change', () => {
+      state.draft[`${k}Budget`] = normBudget(el.value, state.draft[`${k}Budget`]);
+      el.value = state.draft[`${k}Budget`]; // 1,000원 단위로 정리
+    });
+  });
+  $('#setup-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    state.draft.lunchBudget = normBudget($('#lunch-budget').value, state.draft.lunchBudget);
+    state.draft.dinnerBudget = normBudget($('#dinner-budget').value, state.draft.dinnerBudget);
+    state.input = sanitizeInput(state.draft); // 조건이 같으면 기존 식단(교체한 메뉴 포함)을 그대로 보여준다
+    saveStore();
+    if (location.hash === '#plan') route();
+    else location.hash = '#plan';
+  });
+
+  // ---------- 이벤트: 식단표 ----------
   $('#reshuffle').addEventListener('click', () => {
     state.seed = newSeed();
     computePlan();
-    renderAll();
+    renderPlan();
   });
-
   $('#week').addEventListener('click', (e) => {
     const card = e.target.closest('[data-slot]');
     if (card) openSheet(card.dataset.slot);
@@ -692,11 +762,12 @@
     if (!alt) return;
     // 그 끼니만 교체 → 리포트도 다시 계산
     state.plan.picks[state.sheetKey] = alt.dataset.alt;
-    renderAll();
+    renderPlan();
     closeSheet();
   });
   $('#backdrop').addEventListener('click', closeSheet);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSheet(); });
+  window.addEventListener('hashchange', route);
 
   // ---------- 시작 ----------
   fetch('data/restaurants.json')
@@ -707,13 +778,12 @@
       $('#sample-flag').hidden = !SAMPLE_DATA;
       if (/^https:\/\//.test(REPORT_URL)) {
         $('#report-link').href = REPORT_URL;
-        $('#report-link').hidden = false;
+        $('#report-cta').hidden = false;
       }
-      renderS1();
-      renderAll();
+      route();
     })
     .catch(() => {
-      $('#week').innerHTML = '<p class="bad">메뉴 데이터를 불러오지 못했어요. 로컬에서는 http 서버로 열어 주세요.</p>';
+      $('#setup-form').innerHTML = '<p class="bad">메뉴 데이터를 불러오지 못했어요. 로컬에서는 http 서버로 열어 주세요.</p>';
     });
   </script>
 </body>
