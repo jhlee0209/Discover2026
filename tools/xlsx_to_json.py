@@ -6,7 +6,9 @@ GitHub에서 data/menu.xlsx를 교체하면 .github/workflows/menu-data.yml이 �
 """
 import json
 import sys
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import openpyxl
 
@@ -56,7 +58,16 @@ def num(v):
     return None if v in (None, "") else round(float(v))
 
 
+def previous_added():
+    """이전 restaurants.json의 (식당명, 메뉴명) → 추가 날짜. 파일이 없으면 None (첫 변환은 '새 메뉴'로 치지 않음)"""
+    if not OUT.exists():
+        return None
+    return {(m["restaurant"], m["menu"]): m.get("added") for m in json.loads(OUT.read_text(encoding="utf-8"))}
+
+
 def main(path):
+    prev = previous_added()
+    today = datetime.now(ZoneInfo("Asia/Seoul")).date().isoformat()
     ws = openpyxl.load_workbook(path, data_only=True).worksheets[0]
     rows = list(ws.iter_rows(values_only=True))
     head = next(i for i, r in enumerate(rows) if r and r[0] == "구역")
@@ -92,6 +103,9 @@ def main(path):
                 "carb": num(c), "protein": num(p), "fat": num(f),
                 "note": str(note).strip() if note not in (None, "") else None,
             })
+            # 앱 상단 '새 메뉴' 배너용: 이전 데이터에 없던 메뉴만 오늘 날짜, 기존 메뉴는 원래 날짜 유지
+            k = (out[-1]["restaurant"], out[-1]["menu"])
+            out[-1]["added"] = None if prev is None else prev.get(k, today)
             if out[-1]["price"] is None or out[-1]["kcal"] is None:
                 raise ValueError("가격 또는 칼로리가 빈칸")
         except (TypeError, ValueError) as e:
@@ -101,7 +115,8 @@ def main(path):
         print("변환 실패 — 아래 행을 고쳐 주세요:\n" + "\n".join(errors))
         sys.exit(1)
     OUT.write_text("[\n" + ",\n".join("  " + json.dumps(m, ensure_ascii=False) for m in out) + "\n]\n", encoding="utf-8")
-    print(f"{len(out)}개 메뉴 · {len(rest_ids)}개 식당 → {OUT}")
+    new = [m for m in out if prev is not None and (m["restaurant"], m["menu"]) not in prev]
+    print(f"{len(out)}개 메뉴 · {len(rest_ids)}개 식당 → {OUT}" + (f" (새 메뉴 {len(new)}개)" if new else ""))
 
 
 if __name__ == "__main__":

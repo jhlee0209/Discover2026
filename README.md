@@ -25,10 +25,11 @@ python3 -m http.server 8001 --directory samil-fit
 ```json
 { "id": "...", "restaurant": "...", "area": "ls|yr|ipark|cvs", "menu": "...", "price": 12900,
   "kcal": 650, "source": "official|est", "open": { "lunch": true, "dinner": true, "late": false },
-  "carb": null, "protein": null, "fat": null, "note": "일요일 휴무" }
+  "carb": null, "protein": null, "fat": null, "note": "일요일 휴무", "added": "2026-10-05" }
 ```
+- `added`: 변환 스크립트가 이전 데이터에 없던 메뉴(식당명+메뉴명 기준)에만 그날 날짜(KST)를 붙임. 앱은 가장 최근 날짜의 메뉴를 상단 'NEW' 배너로 14일간 보여줌(✕로 닫으면 그 업데이트는 다시 안 뜸). 식당 메뉴가 전부 새것이면 '새 식당'으로 표시. 메뉴명을 바꾸면 새 메뉴로 잡힘.
 - `note`: 엑셀 '비고' 칸. S3 메뉴 상세 시트에 📝 한 줄로 표시 (설계서 추가 항목, 팀 합의).
-- 원본 엑셀: `data/menu.xlsx` (첫 번째 시트만 사용, 다른 시트는 무시). 현재 51곳 · 122개 메뉴.
+- 원본 엑셀: `data/menu.xlsx` (첫 번째 시트만 사용, 다른 시트는 무시). 현재 52곳 · 127개 메뉴.
 
 ## 메뉴 데이터 업데이트 (데이터팀용)
 사용자 제보는 앱의 "메뉴 제보하기" → [구글 폼](https://docs.google.com/forms/d/e/1FAIpQLSeQ0JX40fYWNZvibPIMkDMBatAE-K-me1dcSiktMiRDEwXa4A/viewform)으로 들어옴 → 데이터팀이 확인 후 엑셀에 추가.
@@ -61,3 +62,4 @@ python3 -m http.server 8001 --directory samil-fit
 | 10/03 | | 편의점 추가 엑셀 반영 + 개선 3가지 + 비고 표시 | 빈 카드 사유 구분, 모바일 '식단 보기' 버튼, 탄단지 숫자 대비 개선, S3 비고 | 수정본 |
 | 10/05 | | 제보 → 검토 → 반영(A안), 구글 폼 연결 | 제보 링크, 엑셀 업로드 시 GitHub Actions 자동 변환, 폼·엑셀 구역 띄어쓰기 차이 허용 | 자동 반영 구조 |
 | 10/06 | | 리뷰: 조건 입력 → 식단표 2단계, 식단 화면 상단 조건 요약, 참고 이미지 색감 | 화면 분리(#setup/#plan), 조건 요약 · 조건 수정, 제보 CTA, 그라데이션 디자인 | UI 전면 개편 |
+| 10/06 | | 엑셀에 새 메뉴 · 식당이 추가되면 상단에 알림 | 변환 시 새 메뉴에 added 날짜 기록(workflow 수정 없이), 최근 업데이트 NEW 배너 · 닫기 · 14일 후 자동 숨김 | 새 메뉴 알림 |

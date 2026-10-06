@@ -213,6 +213,20 @@
     .alt .ap { text-align: right; color: var(--sub); font-size: 12.5px; }
     .no-alt { color: var(--sub); font-size: 13.5px; }
 
+    /* 새 메뉴 · 식당 알림 배너 */
+    .news-wrap { max-width: 1200px; margin: 14px auto 0; padding: 0 20px; }
+    .news-wrap.narrow { max-width: 640px; }
+    .news { display: flex; gap: 12px; align-items: flex-start; padding: 13px 14px 13px 16px; border-radius: 16px; background: var(--card); border: 1px solid color-mix(in srgb, var(--main) 35%, var(--border)); box-shadow: var(--shadow); }
+    .news-badge { flex: none; margin-top: 1px; font-size: 11px; font-weight: 900; letter-spacing: .04em; color: var(--on-main); background: var(--main); padding: 2px 8px; border-radius: 999px; }
+    .news-body { flex: 1; min-width: 0; }
+    .news-title { font-size: 14.5px; font-weight: 800; }
+    .news-title span { color: var(--sub); font-weight: 700; font-size: 12.5px; margin-left: 4px; }
+    .news-list { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 3px; font-size: 13px; color: var(--sub); }
+    .news-list b { color: var(--text); }
+    .news-new { display: inline-block; font-size: 10.5px; font-weight: 800; color: var(--main-text); background: var(--main-soft); padding: 0 6px; border-radius: 5px; margin: 0 4px; vertical-align: 1px; }
+    .news-close { flex: none; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); background: var(--card); cursor: pointer; font-size: 13px; color: var(--sub); }
+    .news-close:hover { color: var(--text); border-color: var(--text); }
+
     .footer { text-align: center; color: var(--sub); font-size: 12px; padding: 0 20px 32px; }
 
     /* 반응형 */
@@ -243,6 +257,11 @@
     <a class="logo" href="#setup">삼일핏<i>.</i></a>
     <span class="sample-flag" id="sample-flag" hidden>샘플 데이터</span>
   </header>
+
+  <!-- 엑셀에 새 메뉴 · 식당이 추가되면 상단에 알림 -->
+  <div class="news-wrap" id="news-wrap" hidden>
+    <div class="news" role="status" id="news"></div>
+  </div>
 
   <!-- 화면 1: 조건 입력 -->
   <main class="setup" id="screen-setup">
@@ -360,6 +379,8 @@
   const MEAL_LABEL = { lunch: '점심', dinner: '저녁', snack: '심야 야식' };
   const DEFAULT_INPUT = { lunchBudget: 15000, dinnerBudget: 20000, mode: 'maintain', work: ['off', 'off', 'ot1', 'ot1', 'off'], cheat: 'none' };
   const STORE_KEY = 'samilfit:v2';
+  const NEWS_KEY = 'samilfit:newsSeen'; // 닫은 업데이트 날짜
+  const NEWS_DAYS = 14;                 // 추가된 지 이 기간이 지나면 배너를 띄우지 않음
   const SAMPLE_DATA = false; // 샘플 데이터로 돌릴 때만 true (화면 상단에 표시)
   // 메뉴 제보 폼 주소 (구글 폼 등). 비워 두면 제보 버튼을 숨긴다
   const REPORT_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeQ0JX40fYWNZvibPIMkDMBatAE-K-me1dcSiktMiRDEwXa4A/viewform';
@@ -629,12 +650,48 @@
     renderReport(week);
   }
 
+  // ---------- 새 메뉴 · 식당 알림 ----------
+  // 변환 스크립트가 새로 생긴 메뉴에 붙인 added(YYYY-MM-DD) 중 가장 최근 날짜의 메뉴를 보여준다
+  function latestNews() {
+    const dates = state.data.map((m) => m.added).filter(Boolean).sort();
+    const latest = dates[dates.length - 1];
+    if (!latest) return null;
+    const age = (Date.now() - new Date(`${latest}T00:00:00+09:00`)) / 86400000;
+    if (age > NEWS_DAYS) return null;
+    try { if (localStorage.getItem(NEWS_KEY) === latest) return null; } catch { /* 저장소를 못 쓰면 그냥 보여준다 */ }
+    const menus = state.data.filter((m) => m.added === latest);
+    const byRest = new Map();
+    menus.forEach((m) => byRest.set(m.restaurant, [...(byRest.get(m.restaurant) || []), m.menu]));
+    // 그 식당의 메뉴가 전부 이번에 추가됐으면 '새 식당'
+    const isNewRest = (r) => state.data.every((m) => m.restaurant !== r || m.added === latest);
+    return { latest, menus, byRest, newRests: [...byRest.keys()].filter(isNewRest) };
+  }
+
+  function renderNews(onPlan) {
+    const n = latestNews();
+    $('#news-wrap').hidden = !n;
+    $('#news-wrap').classList.toggle('narrow', !onPlan);
+    if (!n) return;
+    const [, mm, dd] = n.latest.split('-').map(Number);
+    const counts = [n.newRests.length ? `새 식당 ${n.newRests.length}곳` : '', `새 메뉴 ${n.menus.length}개`].filter(Boolean).join(' · ');
+    const rests = [...n.byRest.entries()];
+    const shown = rests.slice(0, 3).map(([r, ms]) => `<li><b>${esc(r)}</b>${n.newRests.includes(r) ? '<span class="news-new">새 식당</span>' : ' · '}${esc(ms.slice(0, 3).join(', '))}${ms.length > 3 ? ` 외 ${ms.length - 3}개` : ''}</li>`).join('');
+    $('#news').innerHTML = `
+      <span class="news-badge">NEW</span>
+      <div class="news-body">
+        <p class="news-title">${counts}가 추가됐어요<span>${mm}/${dd} 업데이트</span></p>
+        <ul class="news-list">${shown}${rests.length > 3 ? `<li>외 ${rests.length - 3}곳</li>` : ''}</ul>
+      </div>
+      <button type="button" class="news-close" id="news-close" aria-label="새 메뉴 알림 닫기" data-date="${n.latest}">✕</button>`;
+  }
+
   // ---------- 화면 전환 ----------
   function route() {
     closeSheet();
     const onPlan = location.hash === '#plan';
     $('#screen-setup').hidden = onPlan;
     $('#screen-plan').hidden = !onPlan;
+    renderNews(onPlan);
     if (onPlan) {
       renderPlan();
     } else {
@@ -768,6 +825,12 @@
   $('#backdrop').addEventListener('click', closeSheet);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSheet(); });
   window.addEventListener('hashchange', route);
+  $('#news').addEventListener('click', (e) => {
+    const b = e.target.closest('#news-close');
+    if (!b) return;
+    try { localStorage.setItem(NEWS_KEY, b.dataset.date); } catch { /* noop */ }
+    $('#news-wrap').hidden = true;
+  });
 
   // ---------- 시작 ----------
   fetch('data/restaurants.json')
