@@ -72,7 +72,7 @@
     .q-title { font-size: 16px; font-weight: 800; display: flex; align-items: baseline; gap: 8px; }
     .q-title small { font-size: 12.5px; font-weight: 600; color: var(--sub); }
     .q-help { font-size: 12.5px; color: var(--sub); }
-    .budgets { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .budgets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
     .money { min-width: 0; display: flex; flex-direction: column; gap: 4px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 14px; background: var(--card); }
     .money:focus-within { border-color: var(--main); box-shadow: 0 0 0 3px color-mix(in srgb, var(--main) 15%, transparent); }
     .money label { font-size: 12.5px; font-weight: 700; color: var(--sub); }
@@ -80,7 +80,7 @@
     .money input { flex: 1; width: 100%; min-width: 0; border: 0; background: transparent; padding: 0; font-size: 22px; font-weight: 800; outline: none; -moz-appearance: textfield; }
     .money input::-webkit-outer-spin-button, .money input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     .money span { color: var(--sub); font-weight: 700; }
-    .opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .opts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .opt { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; text-align: left; padding: 14px; border-radius: 14px; border: 1px solid var(--border); background: var(--card); cursor: pointer; }
     .opt b { font-size: 14.5px; line-height: 1.3; }
     .opt small { font-size: 12px; font-weight: 700; color: var(--sub); }
@@ -94,9 +94,25 @@
     .seg button[aria-pressed="true"] { background: var(--card); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
     .seg button[aria-pressed="true"][data-work="ot1"], .seg button[aria-pressed="true"][data-work="ot2"] { color: var(--main-text); }
     .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sub-q { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13.5px; font-weight: 700; }
+    .sub-q > span { color: var(--sub); }
+    .kcal-input { display: inline-flex; align-items: baseline; gap: 4px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--card); }
+    .kcal-input:focus-within { border-color: var(--main); }
+    .kcal-input input { width: 64px; border: 0; background: transparent; font-size: 17px; font-weight: 800; text-align: right; outline: none; -moz-appearance: textfield; }
+    .kcal-input input::-webkit-outer-spin-button, .kcal-input input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .kcal-input span { color: var(--sub); font-weight: 700; font-size: 13px; }
+    .custom-row { padding: 12px 14px; border-radius: 14px; background: var(--main-soft); }
+    .switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px; font-weight: 700; }
+    .switch input { width: 18px; height: 18px; accent-color: var(--main); margin: 0; }
+    .cheat-grid { display: grid; grid-template-columns: 40px repeat(5, minmax(0, 1fr)); gap: 6px; align-items: center; }
+    .cheat-grid > span { text-align: center; font-size: 13px; font-weight: 800; color: var(--sub); }
+    .cheat-cell { height: 40px; border-radius: 10px; border: 1.5px dashed var(--border); background: var(--card); cursor: pointer; font-size: 12.5px; font-weight: 800; color: var(--sub); }
+    .cheat-cell[aria-pressed="true"] { border: 1.5px solid var(--cheat); background: var(--cheat-soft); color: var(--cheat); }
+    .cheat-cell:disabled { opacity: .35; cursor: not-allowed; }
+    .cheat-cell:focus-visible { outline: 2px solid var(--main); outline-offset: 2px; }
     .chip-btn { padding: 9px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--card); font-size: 14px; font-weight: 700; cursor: pointer; }
     .chip-btn[aria-pressed="true"] { border-color: var(--cheat); background: var(--cheat-soft); color: var(--cheat); }
-    .chip-btn[data-cheat="none"][aria-pressed="true"] { border-color: var(--text); background: var(--card); color: var(--text); }
+    #spend .chip-btn[aria-pressed="true"] { border-color: var(--main); background: var(--main-soft); color: var(--main-text); }
 
     /* ---------- 화면 2: 식단표 ---------- */
     .result { max-width: 1200px; margin: 0 auto; padding: 18px 20px 56px; display: flex; flex-direction: column; gap: 18px; }
@@ -110,7 +126,11 @@
     .result-head p { color: var(--sub); font-size: 14px; margin-top: 4px; }
     .panel { background: var(--card-glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 20px; padding: 20px; box-shadow: var(--shadow); }
     .panel-title { font-size: 18px; font-weight: 800; margin-bottom: 14px; }
-    .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12.5px; color: var(--sub); margin-top: 14px; }
+    .legend { display: flex; gap: 8px 14px; flex-wrap: wrap; font-size: 12.5px; color: var(--sub); margin-top: 14px; }
+    .tip { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; padding: 10px 12px; border-radius: 12px; background: var(--main-soft); font-size: 13.5px; font-weight: 700; color: var(--main-text); }
+    .notice { margin-bottom: 14px; padding: 10px 12px; border-radius: 12px; background: var(--soft); border: 1px solid var(--border); font-size: 13px; color: var(--sub); }
+    .notice b { color: var(--text); }
+    .data-note { margin-top: 8px; font-size: 12px; color: var(--sub); }
     .legend span { display: inline-flex; gap: 6px; align-items: center; }
 
     .badge { display: inline-block; font-size: 11px; font-weight: 700; line-height: 1.5; padding: 0 7px; border-radius: 6px; white-space: nowrap; }
@@ -142,6 +162,8 @@
     .meal.free:active, .meal.empty:active { transform: none; }
     .meal.empty, .meal.empty:hover { border-color: var(--cheat); color: var(--cheat); }
     .free-text, .empty-text { font-size: 13px; font-weight: 600; }
+    .meal-foot { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+    .swap-hint { font-size: 11.5px; font-weight: 800; color: var(--main-text); white-space: nowrap; }
 
     .mbar { display: flex; height: 6px; border-radius: 99px; overflow: hidden; background: var(--border); }
     .mbar i { display: block; height: 100%; }
@@ -172,6 +194,7 @@
     .bgoal { position: absolute; left: -5px; right: -5px; border-top: 2px dashed var(--sub); }
     .bval { font-size: 11.5px; font-weight: 700; }
     .bday { font-size: 13px; font-weight: 800; color: var(--sub); }
+    .bfree { font-size: 10.5px; font-weight: 700; color: var(--sub); white-space: nowrap; }
     .chart-legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--sub); margin-top: 10px; }
     .chart-legend span { display: inline-flex; align-items: center; gap: 5px; }
     .sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
@@ -239,7 +262,9 @@
       .form { padding: 20px 16px; border-radius: 18px; }
       .opts { grid-template-columns: 1fr; }
       .opt { flex-direction: row; justify-content: space-between; align-items: center; }
-      .money input { font-size: 20px; }
+      .money { padding: 9px 10px; }
+      .money input { font-size: 17px; }
+      .cheat-grid { grid-template-columns: 34px repeat(5, minmax(0, 1fr)); gap: 5px; }
       .result-head h1 { font-size: 25px; }
       .week { grid-template-columns: minmax(0, 1fr); gap: 18px; }
       .panel { padding: 16px; }
@@ -277,30 +302,45 @@
         <div class="budgets">
           <div class="money">
             <label for="lunch-budget">점심</label>
-            <div><input id="lunch-budget" type="number" inputmode="numeric" min="1000" step="1000" class="num"><span>원</span></div>
+            <div><input id="lunch-budget" type="text" inputmode="numeric" autocomplete="off" class="num money-input" data-key="lunchBudget"><span>원</span></div>
           </div>
           <div class="money">
-            <label for="dinner-budget">저녁 식대</label>
-            <div><input id="dinner-budget" type="number" inputmode="numeric" min="1000" step="1000" class="num"><span>원</span></div>
+            <label for="dinner-budget">저녁</label>
+            <div><input id="dinner-budget" type="text" inputmode="numeric" autocomplete="off" class="num money-input" data-key="dinnerBudget"><span>원</span></div>
+          </div>
+          <div class="money">
+            <label for="snack-budget">야식</label>
+            <div><input id="snack-budget" type="text" inputmode="numeric" autocomplete="off" class="num money-input" data-key="snackBudget"><span>원</span></div>
           </div>
         </div>
-        <span class="q-help">저녁 식대는 야근하는 날 저녁(과 야식)에만 적용돼요.</span>
+        <span class="q-help">저녁은 야근 · 치팅 저녁에만, 야식은 심야 야근 날에만 적용돼요.</span>
+        <div class="sub-q"><span>예산 활용</span><div class="chips" role="group" aria-label="예산 활용" id="spend"></div></div>
       </div>
 
       <div class="q">
-        <span class="q-title" id="mode-label">식단 상태</span>
+        <span class="q-title" id="mode-label">식단 상태 <small>끼니당 목표 칼로리</small></span>
         <div class="opts" role="group" aria-labelledby="mode-label" id="modes"></div>
+        <div class="sub-q custom-row" id="custom-row" hidden>
+          <label for="custom-kcal">끼니당 목표</label>
+          <span class="kcal-input"><input id="custom-kcal" type="number" inputmode="numeric" min="300" max="1500" step="50" class="num"><span>kcal</span></span>
+          <span>300~1,500 · 벌크업은 900 이상</span>
+        </div>
       </div>
 
       <div class="q">
         <span class="q-title">요일별 근무 형태</span>
         <div class="work" id="work"></div>
         <span class="q-help">1차 야근: 18~20시 저녁 · 심야 야근: 저녁 + 심야 야식</span>
+        <label class="switch"><input type="checkbox" id="snack-on"> 심야 야근 날 야식도 추천받기</label>
       </div>
 
       <div class="q">
-        <span class="q-title" id="cheat-label">치팅 끼니 <small>선택 · 800 kcal 기준</small></span>
-        <div class="chips" role="group" aria-labelledby="cheat-label" id="cheats"></div>
+        <span class="q-title" id="cheat-label">치팅 · 회식 끼니 <small>선택 · 최대 3끼</small></span>
+        <div class="cheat-grid" role="group" aria-labelledby="cheat-label" id="cheats"></div>
+        <div class="sub-q">
+          <label for="cheat-kcal">치팅 끼니 목표</label>
+          <span class="kcal-input"><input id="cheat-kcal" type="number" inputmode="numeric" min="400" max="1500" step="50" class="num"><span>kcal</span></span>
+        </div>
       </div>
 
       <button class="btn btn-lg" type="submit">이번 주 식단 짜기 →</button>
@@ -314,17 +354,23 @@
     <div class="result-head">
       <div>
         <h1>이번 주 식단</h1>
-        <p>카드를 누르면 메뉴 상세와 다른 메뉴로 바꾸기를 볼 수 있어요.</p>
+        <p>마음에 안 드는 끼니만 골라 바꿀 수 있어요.</p>
       </div>
       <button class="btn btn-ghost" id="reshuffle" type="button">↻ 식단 다시 짜기</button>
     </div>
 
     <section class="panel" aria-label="이번 주 식단표">
+      <p class="tip">👆 메뉴 카드를 누르면 그 끼니만 다른 메뉴로 바꿀 수 있어요</p>
+      <p class="notice" id="repeat-notice" hidden></p>
       <div class="week" id="week"></div>
-      <div class="legend" aria-label="칼로리 출처 안내">
+      <div class="legend" aria-label="범례">
+        <span><i class="sw c-carb"></i>탄수화물</span>
+        <span><i class="sw c-protein"></i>단백질</span>
+        <span><i class="sw c-fat"></i>지방</span>
         <span><span class="badge badge-official">공식값</span>포장지 · 브랜드가 공개한 영양 정보</span>
         <span><span class="badge badge-est">추정치</span>공식 정보가 없어 팀이 추정한 칼로리</span>
       </div>
+      <p class="data-note">※ 식당 · 메뉴 · 가격은 2026년 10월 조사 기준이라 실제와 다를 수 있어요.</p>
     </section>
 
     <section class="cta" id="report-cta" hidden>
@@ -346,6 +392,7 @@
             <span><i class="sw" style="background:var(--main)"></i>섭취</span>
             <span><i class="sw" style="background:var(--cheat)"></i>치팅 있는 날</span>
             <span><i class="sw-line"></i>목표</span>
+            <span>칼퇴일 저녁(자율 식사)은 합계에서 빠져요</span>
           </div>
         </div>
         <div class="chart-box">
@@ -372,12 +419,19 @@
     { id: 'tight', label: '타이트한 다이어트', short: '타이트 다이어트', target: 450 },
     { id: 'maintain', label: '건강 유지 / 식단 관리', short: '건강 유지', target: 600 },
     { id: 'cheat', label: '적당한 치팅', short: '적당한 치팅', target: 800 },
+    { id: 'custom', label: '직접 입력', short: '직접 입력', target: null }, // 끼니당 칼로리를 사용자가 정함
   ];
   const WORK = { off: '칼퇴', ot1: '1차 야근', ot2: '심야 야근' };
-  const CHEATS = [['none', '없음'], ['4-lunch', '금요일 점심'], ['4-dinner', '금요일 저녁'], ['2-dinner', '수요일 저녁']];
-  const CHEAT_TARGET = 800;
+  const MEALS = { lunch: '점심', dinner: '저녁' };
+  const MAX_CHEATS = 3;
+  const CHEAT_KEYS = DAYS.flatMap((_, d) => Object.keys(MEALS).map((m) => `${d}-${m}`)); // 0-lunch, 0-dinner, …
+  const SPEND = { save: '아껴 쓰기', full: '버짓에 가깝게' };
   const MEAL_LABEL = { lunch: '점심', dinner: '저녁', snack: '심야 야식' };
-  const DEFAULT_INPUT = { lunchBudget: 15000, dinnerBudget: 20000, mode: 'maintain', work: ['off', 'off', 'ot1', 'ot1', 'off'], cheat: 'none' };
+  const DEFAULT_INPUT = {
+    lunchBudget: 15000, dinnerBudget: 20000, snackBudget: 8000,
+    mode: 'maintain', customKcal: 700, work: ['off', 'off', 'ot1', 'ot1', 'off'],
+    cheats: [], cheatKcal: 800, snack: true, spend: 'save',
+  };
   const STORE_KEY = 'samilfit:v2';
   const NEWS_KEY = 'samilfit:newsSeen'; // 닫은 업데이트 날짜
   const NEWS_DAYS = 14;                 // 추가된 지 이 기간이 지나면 배너를 띄우지 않음
@@ -412,6 +466,7 @@
     };
   }
   const newSeed = () => Math.floor(Math.random() * 1e9);
+  const digits = (v) => Number(String(v ?? '').replace(/[^0-9]/g, ''));
 
   // ---------- 상태 ----------
   const stored = loadStore();
@@ -423,34 +478,51 @@
     plan: stored.plan || null, // { sig, picks: { slotKey: menuId | null } }
     draft: null,               // 조건 입력 화면에서 고치는 중인 값 (식단 짜기를 눌러야 반영)
     sheetKey: null,
+    sheetInHistory: false,
   };
 
   function sanitizeInput(x) {
-    const i = { ...DEFAULT_INPUT, ...(x || {}) };
+    const src = x || {};
+    const i = { ...DEFAULT_INPUT, ...src };
+    // 예전 저장값(cheat: '4-lunch' 한 개) → cheats 배열
+    if (!Array.isArray(src.cheats) && typeof src.cheat === 'string' && src.cheat !== 'none') i.cheats = [src.cheat];
+    delete i.cheat;
     if (!MODES.some((m) => m.id === i.mode)) i.mode = DEFAULT_INPUT.mode;
     if (!Array.isArray(i.work) || i.work.length !== 5 || i.work.some((w) => !WORK[w])) i.work = [...DEFAULT_INPUT.work];
-    if (!CHEATS.some(([k]) => k === i.cheat)) i.cheat = 'none';
+    i.cheats = [...new Set((Array.isArray(i.cheats) ? i.cheats : []).filter((k) => CHEAT_KEYS.includes(k)))]
+      .sort((a, b) => CHEAT_KEYS.indexOf(a) - CHEAT_KEYS.indexOf(b)).slice(0, MAX_CHEATS);
     i.lunchBudget = normBudget(i.lunchBudget, DEFAULT_INPUT.lunchBudget);
     i.dinnerBudget = normBudget(i.dinnerBudget, DEFAULT_INPUT.dinnerBudget);
+    i.snackBudget = normBudget(i.snackBudget, DEFAULT_INPUT.snackBudget);
+    i.customKcal = normKcal(i.customKcal, 300, 1500, DEFAULT_INPUT.customKcal);
+    i.cheatKcal = normKcal(i.cheatKcal, 400, 1500, DEFAULT_INPUT.cheatKcal);
+    i.snack = i.snack !== false;
+    if (!SPEND[i.spend]) i.spend = DEFAULT_INPUT.spend;
     return i;
   }
   function normBudget(v, fallback) {
-    const n = Math.round(Number(v) / 1000) * 1000;
-    return Number.isFinite(n) && n >= 1000 ? Math.min(n, 200000) : fallback;
+    const n = Math.round(digits(v) / 1000) * 1000;
+    return n >= 1000 ? Math.min(n, 200000) : fallback;
   }
+  function normKcal(v, min, max, fallback) {
+    const n = Math.round(Number(v) / 50) * 50;
+    return Number.isFinite(n) && n > 0 ? Math.min(max, Math.max(min, n)) : fallback;
+  }
+  const mealTarget = (input) => (input.mode === 'custom' ? input.customKcal : MODES.find((m) => m.id === input.mode).target);
 
   // ---------- 추천 로직 (설계서 4-1, 4-2) ----------
   // 그 주에 추천할 끼니 목록. 칼퇴인 날 저녁은 '자율 식사'(추천 없음)
   function buildSlots(input) {
-    const base = MODES.find((m) => m.id === input.mode).target;
+    const base = mealTarget(input);
+    const snackTarget = base >= 800 ? 500 : 300; // 설계서 4-1: 야식 300 (치팅 수준이면 500)
     const slots = [];
     input.work.forEach((w, day) => {
       const lunchKey = `${day}-lunch`;
-      const lunchCheat = input.cheat === lunchKey;
-      slots.push({ key: lunchKey, day, meal: 'lunch', open: 'lunch', budget: input.lunchBudget, areas: null, cheat: lunchCheat, target: lunchCheat ? CHEAT_TARGET : base });
+      const lunchCheat = input.cheats.includes(lunchKey);
+      slots.push({ key: lunchKey, day, meal: 'lunch', open: 'lunch', budget: input.lunchBudget, areas: null, cheat: lunchCheat, target: lunchCheat ? input.cheatKcal : base });
 
       const dinnerKey = `${day}-dinner`;
-      const dinnerCheat = input.cheat === dinnerKey;
+      const dinnerCheat = input.cheats.includes(dinnerKey);
       if (w === 'off' && !dinnerCheat) {
         slots.push({ key: dinnerKey, day, meal: 'dinner', free: true, target: base });
       } else {
@@ -458,11 +530,11 @@
           key: dinnerKey, day, meal: 'dinner', open: 'dinner', budget: input.dinnerBudget,
           areas: w === 'ot2' ? ['ls', 'cvs'] : null, // 1차 야근·치팅 저녁은 모든 구역
           cheat: dinnerCheat, tag: w === 'ot1' ? '야근' : w === 'ot2' ? '심야' : null,
-          target: dinnerCheat ? CHEAT_TARGET : base,
+          target: dinnerCheat ? input.cheatKcal : base,
         });
       }
-      if (w === 'ot2') {
-        slots.push({ key: `${day}-snack`, day, meal: 'snack', open: 'late', budget: input.dinnerBudget, areas: null, cheat: false, target: input.mode === 'cheat' ? 500 : 300 });
+      if (w === 'ot2' && input.snack) {
+        slots.push({ key: `${day}-snack`, day, meal: 'snack', open: 'late', budget: input.snackBudget, areas: null, cheat: false, target: snackTarget });
       }
     });
     return slots;
@@ -488,7 +560,10 @@
       if (slot.free) continue;
       let best = null, bestScore = Infinity;
       for (const m of candidates(slot)) {
-        const score = Math.abs(m.kcal - slot.target) / 100 + (used.has(m.id) ? 4 : 0) + rng() * 1.6;
+        // 설계서 4-2 점수 + 예산 활용(아껴 쓰기: 싼 메뉴 약간 우대 / 버짓에 가깝게: 버짓보다 많이 싼 메뉴 감점)
+        const ratio = m.price / slot.budget;
+        const spend = state.input.spend === 'full' ? (1 - ratio) * 3 : ratio * 0.5;
+        const score = Math.abs(m.kcal - slot.target) / 100 + (used.has(m.id) ? 4 : 0) + spend + rng() * 1.6;
         if (score < bestScore) { best = m; bestScore = score; }
       }
       picks[slot.key] = best ? best.id : null;
@@ -512,15 +587,30 @@
   // ---------- 화면 1: 조건 입력 ----------
   function renderSetup() {
     const d = state.draft;
-    $('#lunch-budget').value = d.lunchBudget;
-    $('#dinner-budget').value = d.dinnerBudget;
+    document.querySelectorAll('.money-input').forEach((el) => { el.value = fmt(d[el.dataset.key]); });
+    $('#spend').innerHTML = Object.entries(SPEND).map(([k, l]) =>
+      `<button type="button" class="chip-btn" data-spend="${k}" aria-pressed="${d.spend === k}">${l}</button>`).join('');
     $('#modes').innerHTML = MODES.map((m) =>
-      `<button type="button" class="opt" data-mode="${m.id}" aria-pressed="${m.id === d.mode}"><b>${esc(m.label)}</b><small class="num">끼니당 ${m.target} kcal</small></button>`).join('');
+      `<button type="button" class="opt" data-mode="${m.id}" aria-pressed="${m.id === d.mode}"><b>${esc(m.label)}</b><small class="num">${m.target ? `끼니당 ${m.target} kcal` : '300~1,500 kcal'}</small></button>`).join('');
+    $('#custom-row').hidden = d.mode !== 'custom';
+    $('#custom-kcal').value = d.customKcal;
+    $('#snack-on').checked = d.snack;
+    $('#cheat-kcal').value = d.cheatKcal;
     $('#work').innerHTML = DAYS.map((day, idx) =>
       `<div class="work-row"><b>${day}</b><div class="seg" role="group" aria-label="${day}요일 근무 형태">${Object.entries(WORK).map(([k, l]) =>
         `<button type="button" data-day="${idx}" data-work="${k}" aria-pressed="${d.work[idx] === k}">${l}</button>`).join('')}</div></div>`).join('');
-    $('#cheats').innerHTML = CHEATS.map(([k, l]) =>
-      `<button type="button" class="chip-btn" data-cheat="${k}" aria-pressed="${d.cheat === k}">${l}</button>`).join('');
+    renderCheats();
+  }
+
+  function renderCheats() {
+    const d = state.draft;
+    const full = d.cheats.length >= MAX_CHEATS;
+    $('#cheats').innerHTML = `<span></span>${DAYS.map((day) => `<span>${day}</span>`).join('')}` +
+      Object.entries(MEALS).map(([meal, label]) => `<span>${label}</span>` + DAYS.map((day, i) => {
+        const k = `${i}-${meal}`;
+        const on = d.cheats.includes(k);
+        return `<button type="button" class="cheat-cell" data-cheat="${k}" aria-pressed="${on}" aria-label="${day}요일 ${label} 치팅" ${full && !on ? 'disabled' : ''}>${on ? '치팅' : ''}</button>`;
+      }).join('')).join('');
   }
 
   // ---------- 화면 2: 선택한 조건 요약 ----------
@@ -534,14 +624,18 @@
 
   function renderSummary() {
     const i = state.input;
-    const cheat = CHEATS.find(([k]) => k === i.cheat)[1];
+    const snackOn = i.snack && i.work.includes('ot2');
+    const cheatText = i.cheats.map((k) => { const [d, m] = k.split('-'); return `${DAYS[d]} ${MEALS[m]}`; }).join(', ');
+    const mode = i.mode === 'custom' ? `끼니 ${fmt(i.customKcal)} kcal` : MODES.find((m) => m.id === i.mode).short;
     $('#summary').innerHTML = `
       <span class="summary-label">내 조건</span>
       <span class="pill num">점심 ${fmt(i.lunchBudget)}원</span>
       <span class="pill num">저녁 ${fmt(i.dinnerBudget)}원</span>
-      <span class="pill">${esc(MODES.find((m) => m.id === i.mode).short)}</span>
-      <span class="pill">${esc(workSummary(i.work))}</span>
-      <span class="pill ${i.cheat === 'none' ? '' : 'cheat'}">${i.cheat === 'none' ? '치팅 없음' : `치팅 ${esc(cheat)}`}</span>
+      ${snackOn ? `<span class="pill num">야식 ${fmt(i.snackBudget)}원</span>` : ''}
+      ${i.spend === 'full' ? '<span class="pill">버짓에 가깝게</span>' : ''}
+      <span class="pill num">${esc(mode)}</span>
+      <span class="pill">${esc(workSummary(i.work))}${i.work.includes('ot2') && !i.snack ? ' (야식 없음)' : ''}</span>
+      <span class="pill num ${i.cheats.length ? 'cheat' : ''}">${i.cheats.length ? `치팅 ${esc(cheatText)} · ${fmt(i.cheatKcal)} kcal` : '치팅 없음'}</span>
       <a class="btn btn-ghost" href="#setup">조건 수정</a>`;
   }
 
@@ -567,11 +661,20 @@
       <span class="meal-place">${esc(m.restaurant)} · ${AREA[m.area]}</span>
       ${bar}
       <div class="meal-nums num"><b>${fmt(m.kcal)} kcal</b><span>${fmt(m.price)}원</span></div>
-      <div>${sourceBadge(m)}</div>
+      <div class="meal-foot">${sourceBadge(m)}<span class="swap-hint" aria-hidden="true">바꾸기 ›</span></div>
     </button>`;
   }
 
   function renderWeek(week) {
+    // 예산 · 영업시간에 맞는 메뉴가 적으면 같은 메뉴가 반복될 수 있어 이유를 알려준다
+    const count = new Map();
+    week.forEach((s) => s.menu && count.set(s.menu.id, (count.get(s.menu.id) || 0) + 1));
+    const repeats = [...count.entries()].filter(([, n]) => n > 1).sort((a, b) => b[1] - a[1]);
+    $('#repeat-notice').hidden = !repeats.length;
+    if (repeats.length) {
+      const [id, n] = repeats[0];
+      $('#repeat-notice').innerHTML = `ℹ️ 예산 · 영업시간에 맞는 메뉴가 적어 같은 메뉴가 반복됐어요 (예: <b>${esc(state.byId[id].menu)}</b> ${n}번). 버짓을 올리면 더 다양해져요.`;
+    }
     $('#week').innerHTML = DAYS.map((d, day) => {
       const slots = week.filter((s) => s.day === day);
       const total = slots.reduce((t, s) => t + (s.menu ? s.menu.kcal : 0), 0);
@@ -590,7 +693,8 @@
     const goal = rec.reduce((t, s) => t + s.target, 0); // 하루 목표 = 끼니당 목표 × 추천 끼니 수
     const spend = filled.reduce((t, s) => t + s.menu.price, 0);
     const dinnerDays = rec.filter((s) => s.meal === 'dinner').length;
-    const budget = state.input.lunchBudget * 5 + state.input.dinnerBudget * dinnerDays;
+    const snackDays = rec.filter((s) => s.meal === 'snack').length;
+    const budget = state.input.lunchBudget * 5 + state.input.dinnerBudget * dinnerDays + state.input.snackBudget * snackDays;
     const pct = budget ? Math.round(spend / budget * 100) : 0;
     const over = total - goal;
 
@@ -609,6 +713,7 @@
         kcal: ss.reduce((t, s) => t + (s.menu ? s.menu.kcal : 0), 0),
         goal: ss.reduce((t, s) => t + s.target, 0),
         cheat: ss.some((s) => s.cheat),
+        free: week.some((s) => s.day === day && s.free),
       };
     });
     const max = Math.max(1, ...days.map((x) => Math.max(x.kcal, x.goal))) * 1.08;
@@ -620,6 +725,7 @@
         </div>
         <span class="bval num">${fmt(x.kcal)}</span>
         <span class="bday">${x.d}</span>
+        ${x.free ? '<span class="bfree">저녁 자율</span>' : '<span class="bfree">&nbsp;</span>'}
       </div>`).join('');
 
     const withMacro = filled.filter((s) => hasMacro(s.menu));
@@ -687,7 +793,7 @@
 
   // ---------- 화면 전환 ----------
   function route() {
-    closeSheet();
+    closeSheet({ fromHistory: true });
     const onPlan = location.hash === '#plan';
     $('#screen-setup').hidden = onPlan;
     $('#screen-plan').hidden = !onPlan;
@@ -745,6 +851,10 @@
             </button>`).join('')}</div>`
         : '<p class="no-alt">이 끼니에 들어갈 수 있는 다른 메뉴가 없어요.</p>'}`;
     lastFocus = document.activeElement;
+    if (!state.sheetInHistory) {
+      history.pushState({ sheet: true }, ''); // 같은 주소로 기록 한 칸 → 뒤로가기는 시트만 닫음
+      state.sheetInHistory = true;
+    }
     $('#sheet').classList.add('open');
     $('#sheet').setAttribute('aria-hidden', 'false');
     $('#backdrop').classList.add('open');
@@ -752,10 +862,14 @@
     $('#sheet-close').focus();
   }
 
-  function closeSheet() {
+  function closeSheet({ fromHistory = false } = {}) {
     if (!state.sheetKey) return;
     const key = state.sheetKey;
     state.sheetKey = null;
+    if (state.sheetInHistory) {
+      state.sheetInHistory = false;
+      if (!fromHistory) history.back(); // ✕ · 바깥 · Esc로 닫으면 시트용 기록 한 칸을 되돌린다
+    }
     $('#sheet').classList.remove('open');
     $('#sheet').setAttribute('aria-hidden', 'true');
     $('#backdrop').classList.remove('open');
@@ -773,7 +887,24 @@
     if (!b) return;
     state.draft.mode = b.dataset.mode;
     pressOnly($('#modes'), b);
+    $('#custom-row').hidden = b.dataset.mode !== 'custom';
+    if (b.dataset.mode === 'custom') $('#custom-kcal').focus();
   });
+  $('#custom-kcal').addEventListener('change', (e) => {
+    state.draft.customKcal = normKcal(e.target.value, 300, 1500, state.draft.customKcal);
+    e.target.value = state.draft.customKcal;
+  });
+  $('#cheat-kcal').addEventListener('change', (e) => {
+    state.draft.cheatKcal = normKcal(e.target.value, 400, 1500, state.draft.cheatKcal);
+    e.target.value = state.draft.cheatKcal;
+  });
+  $('#spend').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-spend]');
+    if (!b) return;
+    state.draft.spend = b.dataset.spend;
+    pressOnly($('#spend'), b);
+  });
+  $('#snack-on').addEventListener('change', (e) => { state.draft.snack = e.target.checked; });
   $('#work').addEventListener('click', (e) => {
     const b = e.target.closest('[data-work]');
     if (!b) return;
@@ -782,21 +913,28 @@
   });
   $('#cheats').addEventListener('click', (e) => {
     const b = e.target.closest('[data-cheat]');
-    if (!b) return;
-    state.draft.cheat = b.dataset.cheat;
-    pressOnly($('#cheats'), b);
+    if (!b || b.disabled) return;
+    const k = b.dataset.cheat;
+    const c = state.draft.cheats;
+    state.draft.cheats = c.includes(k) ? c.filter((x) => x !== k) : [...c, k].slice(0, MAX_CHEATS);
+    renderCheats();
+    $(`#cheats [data-cheat="${k}"]`)?.focus();
   });
-  ['lunch', 'dinner'].forEach((k) => {
-    const el = $(`#${k}-budget`);
+  document.querySelectorAll('.money-input').forEach((el) => {
+    el.addEventListener('input', () => { // 입력하는 동안 쉼표 표시 (15,000)
+      const n = digits(el.value);
+      el.value = n ? fmt(n) : '';
+    });
     el.addEventListener('change', () => {
-      state.draft[`${k}Budget`] = normBudget(el.value, state.draft[`${k}Budget`]);
-      el.value = state.draft[`${k}Budget`]; // 1,000원 단위로 정리
+      state.draft[el.dataset.key] = normBudget(el.value, state.draft[el.dataset.key]);
+      el.value = fmt(state.draft[el.dataset.key]); // 1,000원 단위로 정리
     });
   });
   $('#setup-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    state.draft.lunchBudget = normBudget($('#lunch-budget').value, state.draft.lunchBudget);
-    state.draft.dinnerBudget = normBudget($('#dinner-budget').value, state.draft.dinnerBudget);
+    document.querySelectorAll('.money-input').forEach((el) => { state.draft[el.dataset.key] = normBudget(el.value, state.draft[el.dataset.key]); });
+    state.draft.customKcal = normKcal($('#custom-kcal').value, 300, 1500, state.draft.customKcal);
+    state.draft.cheatKcal = normKcal($('#cheat-kcal').value, 400, 1500, state.draft.cheatKcal);
     state.input = sanitizeInput(state.draft); // 조건이 같으면 기존 식단(교체한 메뉴 포함)을 그대로 보여준다
     saveStore();
     if (location.hash === '#plan') route();
@@ -825,6 +963,7 @@
   $('#backdrop').addEventListener('click', closeSheet);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSheet(); });
   window.addEventListener('hashchange', route);
+  window.addEventListener('popstate', () => { if (state.sheetKey) closeSheet({ fromHistory: true }); });
   $('#news').addEventListener('click', (e) => {
     const b = e.target.closest('#news-close');
     if (!b) return;
@@ -833,7 +972,7 @@
   });
 
   // ---------- 시작 ----------
-  fetch('data/restaurants.json')
+  fetch('data/restaurants.json', { cache: 'no-cache' })
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then((rows) => {
       state.data = rows.filter((m) => m && m.id && m.open && Number.isFinite(m.kcal) && Number.isFinite(m.price));
